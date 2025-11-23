@@ -1,0 +1,75 @@
+---
+description: Security & privacy rules for TurnSet Clean — prevent data leaks and protect secrets
+globs:
+  - "**/*"
+alwaysApply: true
+---
+# Security & Privacy Rules (TurnSet Clean)
+
+## Core Principles
+
+- **NEVER** leak user data or secrets.
+- **NEVER** commit secrets, tokens, or `.env*` files to the repo.
+- **NEVER** print secrets to logs or error messages.
+- Expose only what’s necessary to the client; follow **least privilege** and **data minimization**.
+
+---
+
+## Data Handling & PII
+
+- PII can include: name, email, phone, address, property details, and any identifying notes from forms.
+- Only collect what’s needed for the feature.
+- Don’t return entire objects from third-party APIs (Shopify/Sanity) directly to the client; map to explicit fields.
+- Avoid logging raw request bodies or response objects that may contain PII.
+
+---
+
+## Server vs Client Boundaries
+
+- Keep secrets on the **server**:
+  - Shopify Storefront token
+  - Sanity tokens
+  - Any future integration keys
+- Only expose `NEXT_PUBLIC_*` env vars when they are truly safe (e.g. public project IDs, not tokens).
+- Do not send internal IDs, configuration values, or secrets to the browser via props, JSON, or meta tags.
+- Use server components / server-side helpers for external API calls whenever possible.
+
+---
+
+## External Integrations (Shopify & Sanity)
+
+- Shopify:
+  - Storefront API token must never be exposed to the client.
+  - Handle errors gracefully without leaking raw error messages or config details.
+- Sanity:
+  - Use public datasets where possible.
+  - If a token is required (draft/preview), keep it server-only and do not expose draft content publicly.
+- Always map third-party responses to internal types before passing to components.
+
+---
+
+## Logging & Errors
+
+- Logs **must not** include:
+  - Secrets, tokens, env vars
+  - Full request bodies with PII
+- Client-facing errors should be generic:
+  - No stack traces or sensitive internals in the browser.
+- Detailed errors are allowed only in server logs.
+
+---
+
+## Frontend Hardening
+
+- Avoid `dangerouslySetInnerHTML`; if you must use it for CMS content, ensure it comes from trusted sources and/or is sanitized.
+- Use `next/image` for images and avoid user-controlled URLs where possible.
+- Don’t include internal implementation details or secrets in HTML, JSON-LD, OG tags, etc.
+
+---
+
+## Secrets & Configuration
+
+- Use `.env.local` for local dev (gitignored).
+- Configure secrets in **Vercel env vars** for Dev/Preview/Prod.
+- Never echo secrets in CI logs or debugging output.
+- If a feature seems to require exposing sensitive info, stop and choose a safer design.

@@ -1,0 +1,68 @@
+---
+description: Conventional commits, CI requirements, and PR hygiene
+globs:
+  - "**/*"
+alwaysApply: true
+---
+# Git Commit and Pull Request Rules
+
+## Branching
+
+- Always create a branch for each feature or bug fix.
+- Always target the `main` branch for PRs.
+
+## Commit Messages
+
+- **MUST** follow Conventional Commits:
+  - `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`.
+- **SHOULD** include scope when relevant:
+  - Example: `feat(services): add listing page`.
+- Keep the subject ≤ 72 characters.
+- Use the body to explain the **why**, not just the **what**, when needed.
+
+## Branches & PRs
+
+- Branch name syntax:
+  - Only alphanumeric (`a-z`, `0-9`) and dashes (`-`).
+- Recommended branch name prefixes:
+  - `feat-*`, `fix-*`, `chore-*`, `refactor-*`.
+- Target branch: `main`.
+
+### PR Title
+
+- Should summarize the changes in the PR.
+  - Example: `feat: add service detail page` or `fix: handle missing Shopify env vars`.
+
+### PR Description
+
+Include:
+
+- **What changed**
+  - Brief list of key changes.
+- **Why**
+  - Reasoning, context, or linked issue (if any).
+- **Screenshots** (for UI changes)
+  - Before/after when helpful.
+- **Testing notes** (required)
+  - How to manually test:
+    - URLs to visit
+    - Actions to take
+    - Expected results
+- **Migration notes** (only if applicable)
+  - Any manual steps or notable changes that affect environments.
+
+## Pre-PR Checklist
+
+- `pnpm lint` passes.
+- `pnpm typecheck` passes.
+- `pnpm test` passes (if tests exist for the touched areas).
+- No secrets or large, unnecessary fixtures checked in.
+
+## CI Requirements
+
+- CI must pass:
+  - lint
+  - typecheck
+  - tests
+  - build
+- Vercel preview deploy (for PRs) should succeed and provide a Preview URL.

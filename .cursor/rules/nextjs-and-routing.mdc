@@ -1,0 +1,45 @@
+---
+description: Next.js, routing, and data fetching for TurnSet Clean
+globs:
+  - "app/**"
+  - "components/**"
+  - "lib/**"
+alwaysApply: true
+---
+
+# Next.js & Routing
+
+- Use **Next.js App Router** with the `app/` directory.
+- Primary routes:
+  - `/` → `app/page.tsx` (homepage)
+  - `/services` → `app/services/page.tsx` (service listing)
+  - `/services/[slug]` → `app/services/[slug]/page.tsx` (service detail)
+  - Optional CMS pages:
+    - `/about` → `app/about/page.tsx`
+    - `/how-it-works` → `app/how-it-works/page.tsx`
+    - `/faq` → `app/faq/page.tsx`
+
+## Data Fetching
+
+- Prefer **Server Components** and server-side data fetching.
+- Keep Shopify & Sanity logic in `lib/` modules:
+  - `lib/shopify.ts`
+  - `lib/sanity.ts`
+- Use Next.js `fetch` caching options to control rendering and caching:
+
+### Page Strategies
+
+- **Homepage (`/`)**
+  - Fetch from Sanity (hero, content blocks) and Shopify (featured services).
+  - Use static generation with ISR:
+    - `next: { revalidate: 300 }` on data fetches.
+- **Service Listing (`/services`)**
+  - Fetch Shopify products representing services.
+  - Static + ISR:
+    - `next: { revalidate: 60 }`.
+- **Service Detail (`/services/[slug]`)**
+  - Fetch Shopify product by handle and matching Sanity content.
+  - Static + ISR + fallback for new services:
+    - `next: { revalidate: 300 }`.
+
+- Use `cache: "no-store"` only for truly dynamic sections if needed (e.g., a “next available date” demo).

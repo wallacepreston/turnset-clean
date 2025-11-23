@@ -1,0 +1,159 @@
+---
+description: Next.js rendering strategies and caching for TurnSet Clean
+globs:
+  - "app/**"
+  - "lib/**"
+alwaysApply: true
+---
+
+# Next.js Rendering & Caching Rules (TurnSet Clean)
+
+TurnSet Clean is a **Next.js App Router** app with a strong focus on:
+
+- Fast initial load
+- Predictable rendering strategies
+- Clear use of caching primitives (`revalidate`, `cache`, etc.)
+
+Use **Server Components** by default and lean on **static generation + ISR** unless there’s a strong reason not to.
+
+---
+
+## 1. General Principles
+
+- Prefer **static rendering + ISR** for:
+  - Marketing pages
+  - Service listing
+  - Service detail pages
+  - CMS-driven informational pages
+- Use **`cache: "no-store"`** or fully dynamic routes **only when truly necessary** (e.g., highly dynamic or per-request data).
+- Keep **data fetching in server components** or helper functions in `lib/`:
+  - Don’t fetch data in client components unless it’s strictly client-only behavior.
+- Any time you choose a rendering strategy, you should be able to explain **why**:
+  - Freshness requirements
+  - SEO needs
+  - Performance impact
+
+---
+
+## 2. Page-Level Strategies
+
+### Homepage (`/`)
+
+**Data sources:**
+
+- **Sanity**: hero content, “how it works”, testimonials, etc.
+- **Shopify**: featured cleaning services.
+
+**Rendering:**
+
+- Use **static generation with ISR**.
+- On data fetches from Shopify/Sanity, use:
+  - `fetch(..., { next: { revalidate: 300 } })`
+- Rationale:
+  - Content changes infrequently but should update without a full redeploy.
+  - Fast, cached HTML from the edge is ideal for marketing pages.
+
+---
+
+### Service Listing (`/services`)
+
+**Data sources:**
+
+- **Shopify**: list of products representing cleaning service packages.
+
+**Rendering:**
+
+- Use **static generation with ISR**.
+- Data fetch from Shopify:
+  - `fetch(..., { next: { revalidate: 60 } })` (or equivalent in client helpers)
+- Rationale:
+  - Services and pricing can change occasionally.
+  - We want mostly-static performance with periodic refresh.
+
+---
+
+### Service Detail (`/services/[slug]`)
+
+**Data sources:**
+
+- **Shopify**: product details (title, description, price, variants, images).
+- **Sanity**: service-specific rich content (what’s included, best for, FAQ, etc.).
+
+**Rendering:**
+
+- Use **static generation with ISR** and support **fallback** pages for newly added services.
+- Data fetches:
+  - `fetch(..., { next: { revalidate: 300 } })` for both Shopify and Sanity.
+- Rationale:
+  - These pages are content-heavy and SEO-critical.
+  - Changes in pricing or content should be reflected within a reasonable window without sacrificing performance.
+
+---
+
+### CMS-Only Pages (`/about`, `/how-it-works`, `/faq`, etc.)
+
+**Data sources:**
+
+- **Sanity** only.
+
+**Rendering:**
+
+- Use **static generation with ISR**.
+- Example:
+  - `fetch(..., { next: { revalidate: 600 } })`
+- Rationale:
+  - Content is static and marketing-focused.
+  - Long-ish revalidation is acceptable and keeps things snappy.
+
+---
+
+## 3. Dynamic or “Live” Sections (Optional)
+
+If you add a small dynamic element (for demo purposes), such as:
+
+- “Next available cleaning date”
+- “Live booking count” widget
+
+Then:
+
+- Use a separate, clearly isolated data call with:
+  - `fetch(..., { cache: "no-store" })`
+- Or, a route handler/API endpoint with no caching, where appropriate.
+
+Be explicit in the code and comments that this is:
+
+- Intentionally **not cached**
+- Used to demonstrate understanding of **dynamic vs static** behavior
+
+---
+
+## 4. Data Fetching Helpers
+
+When adding helpers in `lib/` (e.g. `lib/shopify.ts`, `lib/sanity.ts`):
+
+- Do **not** directly set caching there (don’t bake `revalidate` into the helper if it will be used by multiple pages with different needs).
+- Prefer:
+  - Letting the **caller** (page or layout) decide the `fetch` options / revalidate interval.
+- Exception:
+  - If a helper is page-specific and used in exactly one place, it may bake in the appropriate `revalidate` for clarity.
+
+---
+
+## 5. Images & Assets
+
+- Always use **`next/image`** for product and marketing imagery to take advantage of:
+  - Built-in optimization
+  - Responsive images
+  - Automatic caching via the image optimizer
+- Provide stable dimensions or use layout-safe patterns to avoid layout shift and keep **LCP** strong.
+
+---
+
+## 6. When in Doubt
+
+If you’re unsure which strategy to use:
+
+- Default to **static generation + ISR** with a sensible `revalidate` value.
+- Avoid `cache: "no-store"` unless:
+  - Data genuinely needs per-request freshness, or
+  - You are demonstrating dynamic behavior on purpose.

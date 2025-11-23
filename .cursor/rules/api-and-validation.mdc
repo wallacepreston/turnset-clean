@@ -1,0 +1,22 @@
+---
+description: API patterns and validation for TurnSet Clean
+globs:
+  - "app/api/**"
+  - "lib/**"
+alwaysApply: true
+---
+
+# API & Validation Rules
+
+- This app is primarily a **frontend** consuming **Shopify** and **Sanity**.
+- If you add API routes, use **Next.js Route Handlers** under `app/api/*`.
+- Keep route handlers **thin**:
+  - Do data fetching and business logic in `lib/` modules.
+  - Route handlers should mostly orchestrate input → service → response.
+- Validate external inputs (e.g. query params, JSON bodies) with a small schema library such as **zod** if/when needed.
+- Never trust request bodies or query params; assume they can be malformed.
+- Errors returned from any custom API route should be:
+  - `status`: HTTP status code
+  - `code`: short string identifier
+  - `message`: human-readable summary
+- Do **not** leak stack traces or sensitive details in API responses.

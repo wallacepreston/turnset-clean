@@ -1,0 +1,23 @@
+---
+description: Jest and testing guidelines for TurnSet Clean
+globs:
+  - "**/*.test.{ts,tsx}"
+  - "**/__tests__/**/*.{ts,tsx}"
+alwaysApply: true
+---
+
+# Testing with Jest
+
+- Use **Jest** with **React Testing Library** for unit/integration tests on:
+  - Components in `components/`
+  - Utility functions in `lib/`
+- Prefer tests for:
+  - Critical rendering logic (e.g., service listing, service detail)
+  - Data transformation helpers (mapping Shopify/Sanity responses to internal types)
+- General guidelines:
+  - Keep tests fast and focused.
+  - Name test files alongside code when reasonable: `ComponentName.test.tsx`.
+  - Use Testing Library best practices:
+    - Query by role/text/label instead of test IDs when possible.
+- It’s okay to start with a small test surface:
+  - e.g., test the homepage rendering and one key helper.

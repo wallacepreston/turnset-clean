@@ -1,0 +1,24 @@
+---
+description: Code style and editing guidelines for TurnSet Clean
+globs:
+  - "**/*.{ts,tsx}"
+  - "**/*.mdx"
+alwaysApply: true
+---
+
+# Code Style & Editing
+
+- Use **TypeScript** everywhere (`.ts` / `.tsx`), no `.js` files.
+- Prefer **functional React components** and **hooks**.
+- Keep components small and focused; extract shared UI into `components/`.
+- Organize non-UI logic into `lib/` (Shopify client, Sanity client, helpers).
+- When editing:
+  - Prefer **refactors** that keep behavior unchanged unless explicitly asked.
+  - Keep diffs minimal and focused on the user’s request.
+- Naming:
+  - Components: `PascalCase`
+  - Hooks & functions: `camelCase`
+  - Types & interfaces: `PascalCase`
+- Enable and respect ESLint/Prettier formatting:
+  - Do not introduce new lint warnings where possible.
+  - If a rule is clearly too strict for this codebase, leave a comment for the user rather than auto-disabling it everywhere.

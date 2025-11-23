@@ -1,0 +1,28 @@
+---
+description: Vercel deployment and previews for TurnSet Clean
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Vercel & Deployments
+
+- This app is deployed on **Vercel** from the **`turnset-clean`** GitHub repo.
+- Vercel handles:
+  - Production deploys from the main branch.
+  - Preview deployments for feature branches/PRs.
+
+Guidelines:
+
+- Ensure the app **builds cleanly** on Vercel:
+  - No unguarded env var usage (handle missing vars gracefully in development).
+- Environment variables:
+  - Set Shopify and Sanity env vars in Vercel Project settings for:
+    - Production
+    - Preview (if needed)
+- No custom CI/CD deploy steps are required:
+  - GitHub Actions should focus on:
+    - `lint`
+    - `test`
+    - `type-check`
+  - Vercel will perform the actual deploy on successful pushes.

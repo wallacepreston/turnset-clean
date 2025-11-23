@@ -1,0 +1,71 @@
+---
+description: UI style, Tailwind, and components for TurnSet Clean
+globs:
+  - "components/**"
+  - "app/**"
+alwaysApply: true
+---
+
+# UI Style & Tailwind
+
+- Use **Tailwind CSS** as the primary styling system.
+- Aim for:
+  - Clean, modern, minimal SaaS-style design.
+  - Good spacing, clear hierarchy, readable typography.
+  - Fully responsive layouts (mobile → desktop).
+- If using shadcn/ui:
+  - Keep component usage minimal and consistent.
+  - Prefer composable primitives (e.g. Card, Button) over deeply nested custom components.
+
+## UX & Layout
+
+- Use semantic HTML where possible:
+  - `<main>`, `<header>`, `<section>`, `<nav>`, `<footer>`.
+- For key pages:
+  - Homepage: make the hero clear, with a strong CTA.
+  - Services listing: scannable cards, clear price, short description.
+  - Service detail: good structure for sections (what’s included, FAQ, etc.).
+- Use `next/image` for images to improve performance and caching.
+
+### Design Principles
+
+We follow these key principles:
+
+- Usability: Clear navigation, consistent button styles, and straightforward forms.
+- Accessibility: WCAG 2.1 AA compliance with proper ARIA roles, keyboard navigation, and color contrast.
+- Responsiveness: Mobile-first design that adapts layouts from phones to desktops.
+- Clarity: Simple language, clear calls to action, and minimal clutter.
+
+### Styling and Theming
+
+Tailwind CSS is our core styling tool with a light/dark theme toggle. We follow a consistent color palette:
+
+Light mode:
+
+- Primary: #6366F1, Secondary: #06B6D4, CTA: #4F46E5
+- Backgrounds: #F5F7FB / #FFFFFF, Borders: #E2E8F0, Text: #0B1220
+- Alerts: Success #16A34A, Warning #F59E0B, Error #DC2626
+
+Dark mode:
+
+- Primary: #818CF8, Secondary: #22D3EE, CTA: #6366F1
+- Backgrounds: #0B1220 / #0F172A, Borders: #1F2937, Text: #E5E7EB
+- Alerts: Success #22C55E, Warning #FBBF24, Error #F87171
+
+We use utility classes for spacing, typography, and layout. Fonts are system-UI for performance and familiarity.
+
+- When customizing colors, first create the color variable in the css file, `src/styles/globals.css`, similar to this
+
+  ```css
+  :root {
+    --color-primary: #6366F1;
+  }
+  ```
+
+  - Then use the color variable in the tailwind `@theme` statement, similar to this
+  
+  ```css
+  @theme {
+    --color-primary: var(--color-primary);
+  }
+  ```
