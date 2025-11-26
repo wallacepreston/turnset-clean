@@ -1,11 +1,39 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import { getAllServiceProducts } from "@/lib/shopify";
+import type { Product } from "@/lib/types";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Services | TurnSet Clean",
   description: "Choose from our range of professional cleaning services for your property.",
 };
 
-export default function ServicesPage() {
+export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+
+export default async function ServicesPage() {
+  let products: Product[] = [];
+  let error: string | null = null;
+
+  try {
+    products = await getAllServiceProducts();
+  } catch (err) {
+    error =
+      err instanceof Error
+        ? err.message
+        : "Failed to load services. Please check your Shopify configuration.";
+    products = [];
+  }
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="space-y-8">
@@ -17,16 +45,73 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        <div className="mt-12">
-          <div className="rounded-lg border border-dashed p-12 text-center">
-            <p className="text-lg font-medium text-muted-foreground">
-              TODO: Connect to Shopify
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Service listings will be fetched from Shopify Storefront API
+        {error && (
+          <div className="rounded-lg border border-dashed border-destructive/50 bg-destructive/10 p-6 text-center">
+            <p className="text-sm font-medium text-destructive">{error}</p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Please configure SHOPIFY_STOREFRONT_API_URL and
+              SHOPIFY_STOREFRONT_API_TOKEN in your environment variables.
             </p>
           </div>
-        </div>
+        )}
+
+        {products.length === 0 && !error && (
+          <div className="rounded-lg border border-dashed p-12 text-center">
+            <p className="text-lg font-medium text-muted-foreground">
+              No services available
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Check back soon for our cleaning services.
+            </p>
+          </div>
+        )}
+
+        {products.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+            {products.map((product) => (
+              <Card key={product.id} className="flex flex-col">
+                {product.featuredImage && (
+                  <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
+                    <Image
+                      src={product.featuredImage.url}
+                      alt={product.featuredImage.altText || product.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <CardHeader>
+                  <CardTitle>{product.title}</CardTitle>
+                  <CardDescription className="line-clamp-2">
+                    {product.description || "Professional cleaning service"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <p className="text-2xl font-bold">
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: product.priceRange.minVariantPrice.currencyCode,
+                    }).format(
+                      parseFloat(product.priceRange.minVariantPrice.amount)
+                    )}
+                  </p>
+                  {product.variants.length > 1 && (
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {product.variants.length} variants available
+                    </p>
+                  )}
+                </CardContent>
+                <CardFooter>
+                  <Button asChild className="w-full">
+                    <Link href={`/services/${product.handle}`}>
+                      View Details
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
