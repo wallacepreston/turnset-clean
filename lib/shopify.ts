@@ -132,6 +132,11 @@ function transformProduct(node: ShopifyProductNode): Product {
 
 /**
  * Fetch all service products from Shopify
+ * 
+ * Note: The Storefront API only returns products that are:
+ * - Published (status: Active, not Draft or Archived)
+ * - Available in the sales channel associated with the Storefront API token
+ * - Have at least one variant available for sale
  */
 export async function getAllServiceProducts(): Promise<Product[]> {
   try {
@@ -170,10 +175,37 @@ export async function getAllServiceProducts(): Promise<Product[]> {
     const data = response.data as ShopifyProductsResponse["data"];
 
     if (!data?.products?.edges) {
+      console.warn("No products found in Shopify response");
       return [];
     }
 
-    return data.products.edges.map((edge) => transformProduct(edge.node));
+    // Log raw response for debugging (only in development)
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[Shopify] Raw API response: ${data.products.edges.length} product(s) returned`);
+      data.products.edges.forEach((edge) => {
+        const node = edge.node;
+        const availableVariants = node.variants.edges.filter(
+          (v) => v.node.availableForSale
+        ).length;
+        console.log(`  - ${node.title} (${node.handle}): ${node.variants.edges.length} variant(s), ${availableVariants} available for sale`);
+      });
+    }
+
+    const products = data.products.edges.map((edge) => transformProduct(edge.node));
+    
+    // Log transformed products (only in development)
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[Shopify] Transformed ${products.length} product(s):`, 
+        products.map(p => ({ 
+          title: p.title, 
+          handle: p.handle,
+          variants: p.variants.length,
+          availableVariants: p.variants.filter(v => v.availableForSale).length
+        }))
+      );
+    }
+
+    return products;
   } catch (error) {
     console.error("Error fetching products from Shopify:", error);
     throw new Error("Failed to fetch products from Shopify");

@@ -1,0 +1,332 @@
+[
+  {
+    "title": "Deep Cleaning Service",
+    "body_html": "<p>Our Deep Cleaning Service is ideal for properties that need more than a standard turnover — perfect after long-term stays, seasonal use, or before high-value guests arrive.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "deep-clean,cleaning,rental,airbnb,vrbo,service,heavy-use",
+    "variants": [
+      {
+        "option1": "1 bed / 1 bath",
+        "price": "159.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed / 1 bath",
+        "price": "199.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "3 bed / 2 bath",
+        "price": "249.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "4+ bed / 2+ bath",
+        "price": "299.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Move-In / Move-Out Cleaning",
+    "body_html": "<p>Detailed cleaning for empty units prior to new tenants. Perfect for landlords and property managers preparing units for new residents.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "move-in,move-out,cleaning,rental,property-management,detailed",
+    "variants": [
+      {
+        "option1": "1 bed / 1 bath",
+        "price": "179.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed / 1 bath",
+        "price": "219.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "3 bed / 2 bath",
+        "price": "279.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "4+ bed / 2+ bath",
+        "price": "329.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Commercial Office Cleaning",
+    "body_html": "<p>Recurring or one-time cleaning for small offices. Professional service to keep your workspace clean and productive.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "commercial,office,cleaning,business,recurring",
+    "variants": [
+      {
+        "option1": "Small office (up to 500 sq ft)",
+        "price": "199.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Medium office (500-1000 sq ft)",
+        "price": "299.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Large office (1000-2000 sq ft)",
+        "price": "399.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Extra large (2000+ sq ft)",
+        "price": "499.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Post-Construction Cleanup",
+    "body_html": "<p>Debris removal, dust scrub, and finish cleaning after renovations. Get your property move-in ready after construction work.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "construction,post-construction,cleanup,debris-removal,renovation",
+    "variants": [
+      {
+        "option1": "Small project (1-2 rooms)",
+        "price": "249.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Medium project (3-4 rooms)",
+        "price": "349.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Large project (entire unit)",
+        "price": "449.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Full house renovation",
+        "price": "599.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Laundry & Linen Service",
+    "body_html": "<p>Washing, drying, folding, and bed remake add-on. Perfect for busy hosts who need help with laundry turnover.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "add-on-service",
+    "tags": "laundry,linen,add-on,bed-making,cleaning",
+    "variants": [
+      {
+        "option1": "1 bed set",
+        "price": "49.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed set",
+        "price": "79.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "3 bed set",
+        "price": "109.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "4+ bed set",
+        "price": "139.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Refrigerator & Oven Deep Clean",
+    "body_html": "<p>Interior appliance scrub as an add-on or standalone service. Deep cleaning for refrigerators and ovens to ensure they're guest-ready.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "add-on-service",
+    "tags": "appliance,refrigerator,oven,deep-clean,add-on",
+    "variants": [
+      {
+        "option1": "Refrigerator only",
+        "price": "49.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Oven only",
+        "price": "49.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Both appliances",
+        "price": "79.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "All kitchen appliances",
+        "price": "119.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Same-Day Emergency Cleaning",
+    "body_html": "<p>Urgent turnaround service for unexpected guest issues. Available for same-day booking when you need immediate cleaning support.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "emergency,same-day,urgent,cleaning,last-minute",
+    "variants": [
+      {
+        "option1": "1 bed / 1 bath",
+        "price": "229.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed / 1 bath",
+        "price": "279.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "3 bed / 2 bath",
+        "price": "329.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "4+ bed / 2+ bath",
+        "price": "379.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Pet-Friendly Cleaning Package",
+    "body_html": "<p>Odor removal, pet hair mitigation, and allergen reduction. Specialized cleaning for properties that welcome pets.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "pet-friendly,pets,odor-removal,allergen-reduction,specialized",
+    "variants": [
+      {
+        "option1": "1 bed / 1 bath",
+        "price": "189.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed / 1 bath",
+        "price": "229.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "3 bed / 2 bath",
+        "price": "279.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "4+ bed / 2+ bath",
+        "price": "329.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Outdoor Patio / Balcony Sweep & Wipe",
+    "body_html": "<p>Light outdoor refresh for rentals with patios. Keep outdoor spaces clean and welcoming for guests.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "add-on-service",
+    "tags": "outdoor,patio,balcony,add-on,exterior",
+    "variants": [
+      {
+        "option1": "Small patio/balcony (up to 100 sq ft)",
+        "price": "39.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Medium patio/balcony (100-200 sq ft)",
+        "price": "59.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Large patio/balcony (200-400 sq ft)",
+        "price": "79.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Extra large (400+ sq ft)",
+        "price": "99.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
+    "title": "Restocking Essentials Service",
+    "body_html": "<p>Toiletries, paper goods, and consumables restock (materials provided by host). Convenient restocking service to keep your property well-stocked.</p>",
+    "vendor": "TurnSet Clean",
+    "product_type": "add-on-service",
+    "tags": "restocking,essentials,toiletries,add-on,consumables",
+    "variants": [
+      {
+        "option1": "Basic restock (1 bathroom)",
+        "price": "29.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Standard restock (2 bathrooms)",
+        "price": "49.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Full restock (3+ bathrooms)",
+        "price": "69.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "Premium restock (full property)",
+        "price": "89.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  }
+]
