@@ -17,7 +17,7 @@ import { resolve } from "path";
 
 config({ path: resolve(process.cwd(), ".env.local") });
 
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 
 interface ProductVariant {
@@ -34,6 +34,7 @@ interface ProductInput {
   product_type: string;
   tags: string;
   variants: ProductVariant[];
+  images?: string[]; // Array of image URLs or local file paths (relative to seed/assets/)
 }
 
 interface ShopifyProductResponse {
@@ -100,6 +101,43 @@ const PUBLISH_PRODUCT_MUTATION = `
           id
           title
         }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+// GraphQL mutation for staged uploads
+const STAGED_UPLOADS_CREATE_MUTATION = `
+  mutation StagedUploadsCreate($input: [StagedUploadInput!]!) {
+    stagedUploadsCreate(input: $input) {
+      stagedTargets {
+        url
+        resourceUrl
+        parameters {
+          name
+          value
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+// GraphQL mutation to create product media
+const PRODUCT_CREATE_MEDIA_MUTATION = `
+  mutation ProductCreateMedia($productId: ID!, $media: [CreateMediaInput!]!) {
+    productCreateMedia(productId: $productId, media: $media) {
+      media {
+        alt
+        mediaContentType
+        status
       }
       userErrors {
         field
@@ -366,19 +404,273 @@ async function publishProductToChannel(
   }
 }
 
+/**
+ * Get image file info (path, buffer, mime type)
+ */
+function getImageFileInfo(imagePath: string): {
+  fullPath: string;
+  buffer: Buffer;
+  mimeType: string;
+  filename: string;
+} {
+  const assetsDir = join(process.cwd(), "seed", "assets");
+  const fullPath = join(assetsDir, imagePath);
+
+  if (!existsSync(fullPath)) {
+    throw new Error(`Image file not found: ${fullPath}`);
+  }
+
+  const imageBuffer = readFileSync(fullPath);
+  
+  // Determine MIME type from file extension
+  const ext = imagePath.split(".").pop()?.toLowerCase();
+  const mimeTypes: Record<string, string> = {
+    png: "image/png",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    gif: "image/gif",
+    webp: "image/webp",
+  };
+  const mimeType = mimeTypes[ext || ""] || "image/png";
+
+  return {
+    fullPath,
+    buffer: imageBuffer,
+    mimeType,
+    filename: imagePath.split("/").pop() || imagePath,
+  };
+}
+
+/**
+ * Upload images to a product using GraphQL staged uploads
+ */
+async function uploadProductImages(
+  productId: number,
+  images: string[]
+): Promise<void> {
+  if (!SHOPIFY_ADMIN_API_TOKEN) {
+    throw new Error("SHOPIFY_ADMIN_API_TOKEN is not set");
+  }
+
+  const graphqlProductId = `gid://shopify/Product/${productId}`;
+
+  for (const image of images) {
+    try {
+      // Check if it's a URL or a local file path
+      if (image.startsWith("http://") || image.startsWith("https://")) {
+        // It's already a URL - use REST API for simplicity
+        const imagesUrl = `https://${SHOPIFY_STORE_DOMAIN}/admin/api/${API_VERSION}/products/${productId}/images.json`;
+        const response = await fetch(imagesUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": SHOPIFY_ADMIN_API_TOKEN,
+          },
+          body: JSON.stringify({
+            image: {
+              src: image,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.warn(
+            `⚠️  Failed to upload image URL "${image}": ${response.status} ${response.statusText}\n${errorText}`
+          );
+        } else {
+          console.log(`   📷 Uploaded image: ${image}`);
+        }
+      } else {
+        // It's a local file - use GraphQL staged upload
+        const fileInfo = getImageFileInfo(image);
+
+        // Step 1: Create staged upload
+        const stagedResponse = await fetch(GRAPHQL_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": SHOPIFY_ADMIN_API_TOKEN,
+          },
+          body: JSON.stringify({
+            query: STAGED_UPLOADS_CREATE_MUTATION,
+            variables: {
+              input: [
+                {
+                  resource: "IMAGE",
+                  filename: fileInfo.filename,
+                  mimeType: fileInfo.mimeType,
+                  fileSize: fileInfo.buffer.length.toString(),
+                },
+              ],
+            },
+          }),
+        });
+
+        if (!stagedResponse.ok) {
+          throw new Error(`Staged upload request failed: ${stagedResponse.status}`);
+        }
+
+        const stagedData = (await stagedResponse.json()) as {
+          data?: {
+            stagedUploadsCreate: {
+              stagedTargets: Array<{
+                url: string;
+                resourceUrl: string;
+                parameters: Array<{ name: string; value: string }>;
+              }>;
+              userErrors: Array<{ field: string[]; message: string }>;
+            };
+          };
+          errors?: Array<{ message: string }>;
+        };
+
+        if (stagedData.errors || stagedData.data?.stagedUploadsCreate.userErrors.length) {
+          const errors = stagedData.errors || stagedData.data?.stagedUploadsCreate.userErrors;
+          throw new Error(`Staged upload failed: ${JSON.stringify(errors)}`);
+        }
+
+        const stagedTarget = stagedData.data?.stagedUploadsCreate.stagedTargets[0];
+        if (!stagedTarget) {
+          throw new Error("No staged target returned");
+        }
+
+        // Step 2: Upload file to staged URL
+        // For Google Cloud Storage signed URLs (which Shopify uses), we need to send the file
+        // directly as the body, not as multipart form data. The parameters are already in the URL.
+        
+        // Check if this is a GCS URL (shopify-staged-uploads.storage.googleapis.com)
+        const isGCS = stagedTarget.url.includes("storage.googleapis.com");
+        
+        let uploadResponse: Response;
+        
+        if (isGCS) {
+          // For GCS: Use PUT method (standard for GCS signed URLs)
+          // The signature only includes "host" in signed headers, so we shouldn't add other headers
+          // The signed URL parameters are already in the URL query string
+          if (process.env.NODE_ENV !== "production") {
+            console.log(`   🔍 Uploading to GCS staged URL (${stagedTarget.parameters.length} URL parameters)`);
+            console.log(`   🔍 File size: ${fileInfo.buffer.length} bytes, MIME: ${fileInfo.mimeType}`);
+            console.log(`   🔍 Using HTTP method: PUT`);
+          }
+          
+          // Convert Buffer to Uint8Array for fetch compatibility
+          // Don't set Content-Type - the signature was calculated without it
+          // Use PUT which is standard for GCS uploads
+          uploadResponse = await fetch(stagedTarget.url, {
+            method: "PUT",
+            body: new Uint8Array(fileInfo.buffer),
+          });
+        } else {
+          // For other storage providers (e.g., AWS S3), use multipart form data
+          const boundary = `----formdata-node-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+          const formParts: string[] = [];
+          
+          // Add parameters first
+          for (const param of stagedTarget.parameters) {
+            formParts.push(`--${boundary}`);
+            formParts.push(`Content-Disposition: form-data; name="${param.name}"`);
+            formParts.push("");
+            formParts.push(param.value);
+          }
+          
+          // Add file last
+          formParts.push(`--${boundary}`);
+          formParts.push(`Content-Disposition: form-data; name="file"; filename="${encodeURIComponent(fileInfo.filename)}"`);
+          formParts.push(`Content-Type: ${fileInfo.mimeType}`);
+          formParts.push("");
+          
+          const formDataBuffer = Buffer.concat([
+            Buffer.from(formParts.join("\r\n") + "\r\n"),
+            fileInfo.buffer,
+            Buffer.from(`\r\n--${boundary}--\r\n`),
+          ]);
+
+          if (process.env.NODE_ENV !== "production") {
+            console.log(`   🔍 Uploading to staged URL (${stagedTarget.parameters.length} parameters)`);
+          }
+
+          uploadResponse = await fetch(stagedTarget.url, {
+            method: "POST",
+            headers: {
+              "Content-Type": `multipart/form-data; boundary=${boundary}`,
+              "Content-Length": formDataBuffer.length.toString(),
+            },
+            body: formDataBuffer,
+          });
+        }
+
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          console.error(`❌ Upload error response:`, errorText);
+          throw new Error(`File upload failed: ${uploadResponse.status} ${uploadResponse.statusText}\n${errorText}`);
+        }
+
+        // Step 3: Create product media using the resource URL
+        const mediaResponse = await fetch(GRAPHQL_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": SHOPIFY_ADMIN_API_TOKEN,
+          },
+          body: JSON.stringify({
+            query: PRODUCT_CREATE_MEDIA_MUTATION,
+            variables: {
+              productId: graphqlProductId,
+              media: [
+                {
+                  alt: image.split(".")[0].replace(/_/g, " "),
+                  mediaContentType: "IMAGE",
+                  originalSource: stagedTarget.resourceUrl,
+                },
+              ],
+            },
+          }),
+        });
+
+        if (!mediaResponse.ok) {
+          throw new Error(`Media creation failed: ${mediaResponse.status}`);
+        }
+
+        const mediaData = (await mediaResponse.json()) as {
+          data?: {
+            productCreateMedia: {
+              media: Array<{ alt: string; mediaContentType: string; status: string }>;
+              userErrors: Array<{ field: string[]; message: string }>;
+            };
+          };
+          errors?: Array<{ message: string }>;
+        };
+
+        if (mediaData.errors || mediaData.data?.productCreateMedia.userErrors.length) {
+          const errors = mediaData.errors || mediaData.data?.productCreateMedia.userErrors;
+          console.warn(`⚠️  Media creation warnings: ${JSON.stringify(errors)}`);
+        } else {
+          console.log(`   📷 Uploaded image: ${image}`);
+        }
+      }
+    } catch (error) {
+      console.warn(`⚠️  Error uploading image "${image}":`, error);
+    }
+  }
+}
+
 async function createProduct(product: ProductInput): Promise<number> {
   if (!SHOPIFY_ADMIN_API_TOKEN) {
     throw new Error("SHOPIFY_ADMIN_API_TOKEN is not set");
   }
 
   try {
+    // Create product without images first (Shopify REST API doesn't support images in initial creation)
+    const { images, ...productWithoutImages } = product;
+    
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-Shopify-Access-Token": SHOPIFY_ADMIN_API_TOKEN,
       },
-      body: JSON.stringify({ product }),
+      body: JSON.stringify({ product: productWithoutImages }),
     });
 
     if (!response.ok) {
@@ -390,6 +682,11 @@ async function createProduct(product: ProductInput): Promise<number> {
 
     const data = (await response.json()) as ShopifyProductResponse;
     console.log(`✅ Created: ${data.product.title} (handle: ${data.product.handle})`);
+
+    // Upload images if provided
+    if (images && images.length > 0) {
+      await uploadProductImages(data.product.id, images);
+    }
 
     return data.product.id;
   } catch (error) {

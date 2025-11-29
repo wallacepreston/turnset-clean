@@ -5,6 +5,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-service",
     "tags": "deep-clean,cleaning,rental,airbnb,vrbo,service,heavy-use",
+    "images": [
+      "Deep_Cleaning_Service.png"
+    ],
     "variants": [
       {
         "option1": "1 bed / 1 bath",
@@ -38,6 +41,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-service",
     "tags": "move-in,move-out,cleaning,rental,property-management,detailed",
+    "images": [
+      "Move-In_Move-Out_Cleaning.png"
+    ],
     "variants": [
       {
         "option1": "1 bed / 1 bath",
@@ -71,6 +77,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-service",
     "tags": "commercial,office,cleaning,business,recurring",
+    "images": [
+      "Commercial_Office_Cleaning.png"
+    ],
     "variants": [
       {
         "option1": "Small office (up to 500 sq ft)",
@@ -170,6 +179,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "add-on-service",
     "tags": "appliance,refrigerator,oven,deep-clean,add-on",
+    "images": [
+      "Refrigerator_Oven_Deep_Clean.png"
+    ],
     "variants": [
       {
         "option1": "Refrigerator only",
@@ -236,6 +248,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-service",
     "tags": "pet-friendly,pets,odor-removal,allergen-reduction,specialized",
+    "images": [
+      "Pet-Friendly_Cleaning_Package.png"
+    ],
     "variants": [
       {
         "option1": "1 bed / 1 bath",
@@ -269,6 +284,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "add-on-service",
     "tags": "outdoor,patio,balcony,add-on,exterior",
+    "images": [
+      "Outdoor_Patio_Balcony_Sweep_Wipe.png"
+    ],
     "variants": [
       {
         "option1": "Small patio/balcony (up to 100 sq ft)",
