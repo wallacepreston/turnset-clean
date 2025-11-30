@@ -1,5 +1,47 @@
 [
   {
+    "title": "Standard Turnover Cleaning",
+    "body_html": "<p>Our Standard Turnover Cleaning is designed for short-term rental hosts and remote property owners who need fast, reliable cleaning between guest stays.</p><p>This service includes:</p><ul><li>Full kitchen cleaning & sanitization</li><li>Bathroom scrub & disinfection</li><li>All surfaces dusted and wiped</li><li>Floors vacuumed and mopped</li><li>Beds stripped and remade (fresh linens must be provided)</li><li>Trash removal & replacement</li><li>Light restocking (toiletries, paper goods — if provided)</li></ul><p>Perfect for:</p><ul><li>Airbnb and VRBO hosts</li><li>Remote landlords</li><li>Mid-term rentals</li><li>Guest-ready turnaround in under 24 hours</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-service",
+    "tags": "standard,turnover,cleaning,rental,airbnb,vrbo,service",
+    "images": [
+      "Standard_Turnover_Cleaning.png"
+    ],
+    "variants": [
+      {
+        "option1": "1 bed / 1 bath",
+        "price": "89.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed / 1 bath",
+        "price": "109.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "2 bed / 2 bath",
+        "price": "129.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "3 bed / 2 bath",
+        "price": "149.00",
+        "requires_shipping": false,
+        "taxable": false
+      },
+      {
+        "option1": "4+ bedroom",
+        "price": "179.00",
+        "requires_shipping": false,
+        "taxable": false
+      }
+    ]
+  },
+  {
     "title": "Deep Cleaning Service",
     "body_html": "<p>Our Deep Cleaning Service is ideal for properties that need more than a standard turnover — perfect after long-term stays, seasonal use, or before high-value guests arrive.</p>",
     "vendor": "TurnSet Clean",
@@ -113,6 +155,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-service",
     "tags": "construction,post-construction,cleanup,debris-removal,renovation",
+    "images": [
+      "Post-Construction_Cleanup.png"
+    ],
     "variants": [
       {
         "option1": "Small project (1-2 rooms)",
@@ -146,6 +191,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "add-on-service",
     "tags": "laundry,linen,add-on,bed-making,cleaning",
+    "images": [
+      "Laundry_Linen_Service.png"
+    ],
     "variants": [
       {
         "option1": "1 bed set",
@@ -215,6 +263,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-service",
     "tags": "emergency,same-day,urgent,cleaning,last-minute",
+    "images": [
+      "Same-Day_Emergency_Cleaning.png"
+    ],
     "variants": [
       {
         "option1": "1 bed / 1 bath",
@@ -320,6 +371,9 @@
     "vendor": "TurnSet Clean",
     "product_type": "add-on-service",
     "tags": "restocking,essentials,toiletries,add-on,consumables",
+    "images": [
+      "Restocking_Essentials_Service.png"
+    ],
     "variants": [
       {
         "option1": "Basic restock (1 bathroom)",
