@@ -74,3 +74,49 @@ export interface ShopifyProductResponse {
   };
 }
 
+// Sanity CMS Types
+export interface HomepageContent {
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroCtaText?: string;
+  heroCtaLink?: string;
+  howItWorksSteps?: Array<{
+    title?: string;
+    description?: string;
+    icon?: string;
+  }>;
+  whoWeServe?: string[];
+  testimonials?: Array<{
+    name?: string;
+    quote?: string;
+    role?: string;
+    avatar?: any; // Sanity image reference
+  }>;
+}
+
+export interface ServiceContent {
+  serviceHandle?: string;
+  whatIsIncluded?: any; // Rich text/portable text
+  bestFor?: string[];
+  beforeAfterImages?: Array<{
+    _type: string;
+    asset: {
+      _ref: string;
+      _type: string;
+    };
+    alt?: string;
+  }>;
+  faqEntries?: Array<{
+    question?: string;
+    answer?: any; // Rich text/portable text
+  }>;
+}
+
+export interface PageContent {
+  title?: string;
+  slug?: {
+    current?: string;
+  };
+  content?: any; // Rich text/portable text
+}
+

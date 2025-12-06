@@ -1,28 +1,48 @@
-export default function FAQPage() {
+import type { Metadata } from "next";
+import { getPageBySlug } from "@/lib/sanity";
+import { PortableText } from "@portabletext/react";
+import { portableTextComponents } from "@/components/PortableTextComponents";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+export const revalidate = 600; // Revalidate every 10 minutes (ISR)
+
+export const metadata: Metadata = {
+  title: "FAQ | TurnSet Clean",
+  description: "Frequently asked questions about our cleaning services.",
+};
+
+export default async function FAQPage() {
+  const pageContent = await getPageBySlug("faq");
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-3xl sm:text-4xl font-bold">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Find answers to common questions about our services.
-          </p>
-        </div>
-
-        <div className="mt-12">
+      <div className="space-y-8 max-w-3xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center">
+          {pageContent?.title || "Frequently Asked Questions"}
+        </h1>
+        {pageContent?.content ? (
+          <div className="prose prose-lg max-w-none">
+            <PortableText
+              value={pageContent.content}
+              components={portableTextComponents}
+            />
+          </div>
+        ) : (
           <div className="rounded-lg border border-dashed p-12 text-center">
             <p className="text-lg font-medium text-muted-foreground">
-              TODO: Connect to Sanity
+              Content coming soon
             </p>
             <p className="text-sm text-muted-foreground mt-2">
               FAQ entries will be fetched from Sanity CMS
             </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 }
-
