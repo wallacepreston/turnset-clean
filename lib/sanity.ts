@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { getSanityEnv } from "./env";
@@ -31,8 +32,11 @@ export function urlForImage(source: any) {
 
 /**
  * Fetch homepage content from Sanity
+ * 
+ * Wrapped with React cache() to ensure request deduplication and proper
+ * integration with Next.js's revalidate system at the page level.
  */
-export async function getHomepageContent(): Promise<HomepageContent | null> {
+export const getHomepageContent = cache(async (): Promise<HomepageContent | null> => {
   try {
     const client = getSanityClient();
     const query = `*[_type == "homepage"][0] {
@@ -60,14 +64,17 @@ export async function getHomepageContent(): Promise<HomepageContent | null> {
     console.error("Error fetching homepage content from Sanity:", error);
     return null;
   }
-}
+});
 
 /**
  * Fetch service-specific content by Shopify handle
+ * 
+ * Wrapped with React cache() to ensure request deduplication and proper
+ * integration with Next.js's revalidate system at the page level.
  */
-export async function getServiceContent(
+export const getServiceContent = cache(async (
   handle: string
-): Promise<ServiceContent | null> {
+): Promise<ServiceContent | null> => {
   try {
     const client = getSanityClient();
     const query = `*[_type == "servicePageContent" && serviceHandle == $handle][0] {
@@ -90,14 +97,17 @@ export async function getServiceContent(
     );
     return null;
   }
-}
+});
 
 /**
  * Fetch page content by slug
+ * 
+ * Wrapped with React cache() to ensure request deduplication and proper
+ * integration with Next.js's revalidate system at the page level.
  */
-export async function getPageBySlug(
+export const getPageBySlug = cache(async (
   slug: string
-): Promise<PageContent | null> {
+): Promise<PageContent | null> => {
   try {
     const client = getSanityClient();
     const query = `*[_type == "simplePage" && slug.current == $slug][0] {
@@ -112,5 +122,5 @@ export async function getPageBySlug(
     console.error(`Error fetching page ${slug} from Sanity:`, error);
     return null;
   }
-}
+});
 

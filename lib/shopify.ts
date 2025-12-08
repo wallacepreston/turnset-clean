@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { getEnv } from "./env";
 import type {
@@ -137,8 +138,11 @@ function transformProduct(node: ShopifyProductNode): Product {
  * - Published (status: Active, not Draft or Archived)
  * - Available in the sales channel associated with the Storefront API token
  * - Have at least one variant available for sale
+ * 
+ * Wrapped with React cache() to ensure request deduplication and proper
+ * integration with Next.js's revalidate system at the page level.
  */
-export async function getAllServiceProducts(): Promise<Product[]> {
+export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
   try {
     const client = getShopifyClient();
     const response = await client.request(ALL_PRODUCTS_QUERY, {
@@ -210,14 +214,17 @@ export async function getAllServiceProducts(): Promise<Product[]> {
     console.error("Error fetching products from Shopify:", error);
     throw new Error("Failed to fetch products from Shopify");
   }
-}
+});
 
 /**
  * Fetch a single service product by handle from Shopify
+ * 
+ * Wrapped with React cache() to ensure request deduplication and proper
+ * integration with Next.js's revalidate system at the page level.
  */
-export async function getServiceProductByHandle(
+export const getServiceProductByHandle = cache(async (
   handle: string
-): Promise<Product | null> {
+): Promise<Product | null> => {
   try {
     const client = getShopifyClient();
     const response = await client.request(PRODUCT_BY_HANDLE_QUERY, {
@@ -262,5 +269,5 @@ export async function getServiceProductByHandle(
     console.error(`Error fetching product ${handle} from Shopify:`, error);
     throw new Error(`Failed to fetch product ${handle} from Shopify`);
   }
-}
+});
 

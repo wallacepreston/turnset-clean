@@ -20,6 +20,26 @@ type Props = {
 
 export const revalidate = 300; // Revalidate every 5 minutes (ISR)
 
+/**
+ * Generate static params for all products at build time.
+ * This enables static generation of product pages while still allowing
+ * on-demand generation for new products via ISR.
+ */
+export async function generateStaticParams() {
+  try {
+    const { getAllServiceProducts } = await import("@/lib/shopify");
+    const products = await getAllServiceProducts();
+    
+    return products.map((product) => ({
+      slug: product.handle,
+    }));
+  } catch (error) {
+    console.error("Error generating static params for products:", error);
+    // Return empty array to allow on-demand generation
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getServiceProductByHandle(slug);

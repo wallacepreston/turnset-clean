@@ -1,13 +1,31 @@
 import { getHomepageContent } from "@/lib/sanity";
+import { getAllServiceProducts } from "@/lib/shopify";
 import { Button } from "@/components/ui/button";
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
+import Link from "next/link";
 import { urlForImage } from "@/lib/sanity";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const revalidate = 300; // Revalidate every 5 minutes (ISR)
 
 export default async function Home() {
-  const homepageContent = await getHomepageContent();
+  // Fetch data from both Sanity (content) and Shopify (products)
+  // This demonstrates multi-source data fetching with proper caching
+  const [homepageContent, featuredProducts] = await Promise.all([
+    getHomepageContent(),
+    getAllServiceProducts().catch(() => []), // Gracefully handle Shopify errors
+  ]);
+
+  // Show first 3 products as featured
+  const featured = featuredProducts.slice(0, 3);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -63,6 +81,62 @@ export default async function Home() {
                 {segment}
               </span>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Featured Services Section */}
+      {featured.length > 0 && (
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Featured Services</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Discover our most popular cleaning services
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featured.map((product) => (
+              <Card key={product.id} className="flex flex-col">
+                {product.featuredImage && (
+                  <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
+                    <Image
+                      src={product.featuredImage.url}
+                      alt={product.featuredImage.altText || product.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <CardHeader>
+                  <CardTitle>{product.title}</CardTitle>
+                  <CardDescription className="line-clamp-2">
+                    {product.description || "Professional cleaning service"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <p className="text-2xl font-bold">
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: product.priceRange.minVariantPrice.currencyCode,
+                    }).format(
+                      parseFloat(product.priceRange.minVariantPrice.amount)
+                    )}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Button asChild className="w-full">
+                    <Link href={`/services/${product.handle}`}>
+                      View Details
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button variant="outline" asChild>
+              <Link href="/services">View All Services</Link>
+            </Button>
           </div>
         </div>
       )}
