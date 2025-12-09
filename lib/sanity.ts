@@ -17,8 +17,11 @@ function getSanityClient() {
     projectId,
     dataset,
     apiVersion,
-    useCdn: true, // Use CDN for faster responses
-    token: apiToken, // Optional, for draft content
+    // Disable Sanity CDN to rely solely on Next.js caching (ISR)
+    // This gives us full control over caching via revalidate and
+    // demonstrates Next.js caching primitives for the presentation
+    useCdn: false,
+    token: apiToken, // for draft content
   });
 }
 
