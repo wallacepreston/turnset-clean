@@ -132,6 +132,7 @@ function transformProduct(node: ShopifyProductNode): Product {
 }
 
 /**
+ * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
  * Fetch all service products from Shopify
  * 
  * Note: The Storefront API only returns products that are:
@@ -217,6 +218,7 @@ export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
 });
 
 /**
+ * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
  * Fetch a single service product by handle from Shopify
  * 
  * Wrapped with React cache() to ensure request deduplication and proper

@@ -17,6 +17,7 @@ function getSanityClient() {
     projectId,
     dataset,
     apiVersion,
+    // @ToPresent @caching: Disabled Sanity CDN to rely solely on Next.js caching (single caching layer)
     // Disable Sanity CDN to rely solely on Next.js caching (ISR)
     // This gives us full control over caching via revalidate and
     // demonstrates Next.js caching primitives for the presentation
@@ -34,6 +35,7 @@ export function urlForImage(source: any) {
 }
 
 /**
+ * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
  * Fetch homepage content from Sanity
  * 
  * Wrapped with React cache() to ensure request deduplication and proper
@@ -70,6 +72,7 @@ export const getHomepageContent = cache(async (): Promise<HomepageContent | null
 });
 
 /**
+ * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
  * Fetch service-specific content by Shopify handle
  * 
  * Wrapped with React cache() to ensure request deduplication and proper
@@ -103,6 +106,7 @@ export const getServiceContent = cache(async (
 });
 
 /**
+ * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
  * Fetch page content by slug
  * 
  * Wrapped with React cache() to ensure request deduplication and proper

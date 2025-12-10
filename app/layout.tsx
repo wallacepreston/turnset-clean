@@ -4,11 +4,13 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 
+// @ToPresent @rendering: Static metadata export for root layout SEO
 export const metadata: Metadata = {
   title: "TurnSet Clean",
   description: "Professional cleaning services.",
 };
 
+// @ToPresent @rendering: Root layout is a Server Component by default (all pages are Server Components)
 export default function RootLayout({
   children,
 }: Readonly<{

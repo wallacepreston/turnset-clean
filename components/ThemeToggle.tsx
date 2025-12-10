@@ -1,3 +1,4 @@
+// @ToPresent @rendering: Client component - uses useTheme hook and onClick handler for interactive theme switching
 "use client";
 
 import { Moon, Sun } from "lucide-react";

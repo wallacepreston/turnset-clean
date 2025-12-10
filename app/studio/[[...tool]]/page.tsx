@@ -10,7 +10,7 @@
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../sanity.config'
 
-// Studio needs to be dynamic to allow editing
+// @ToPresent @rendering: Studio needs to be dynamic to allow editing
 export const dynamic = 'force-dynamic'
 
 export { metadata, viewport } from 'next-sanity/studio'

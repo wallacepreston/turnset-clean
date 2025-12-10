@@ -1,3 +1,4 @@
+// @ToPresent @rendering: Sanity Studio is a client-side React app that runs in the browser, requires "use client"
 'use client'
 
 /**

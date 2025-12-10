@@ -14,9 +14,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+// @ToPresent @caching: ISR with 5-minute revalidation for homepage (balances freshness with performance)
 export const revalidate = 300; // Revalidate every 5 minutes (ISR)
 
+// @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function Home() {
+  // @ToPresent @rendering: Parallel data fetching from multiple sources (Sanity + Shopify) using Promise.all()
   // Fetch data from both Sanity (content) and Shopify (products)
   // This demonstrates multi-source data fetching with proper caching
   const [homepageContent, featuredProducts] = await Promise.all([
@@ -99,6 +102,7 @@ export default async function Home() {
               <Card key={product.id} className="flex flex-col">
                 {product.featuredImage && (
                   <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
+                    {/* @ToPresent @rendering: next/image for automatic image optimization and lazy loading */}
                     <Image
                       src={product.featuredImage.url}
                       alt={product.featuredImage.altText || product.title}
@@ -125,6 +129,7 @@ export default async function Home() {
                 </CardContent>
                 <CardFooter>
                   <Button asChild className="w-full">
+                    {/* @ToPresent @rendering: next/link for client-side navigation with automatic prefetching */}
                     <Link href={`/services/${product.handle}`}>
                       View Details
                     </Link>
@@ -135,6 +140,7 @@ export default async function Home() {
           </div>
           <div className="text-center mt-8">
             <Button variant="outline" asChild>
+              {/* @ToPresent: next/link for client-side navigation with automatic prefetching */}
               <Link href="/services">View All Services</Link>
             </Button>
           </div>

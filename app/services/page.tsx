@@ -13,13 +13,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+// @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "Services | TurnSet Clean",
   description: "Choose from our range of professional cleaning services for your property.",
 };
 
+// @ToPresent @caching: ISR with 60-second revalidation for product listings (pricing changes more frequently)
 export const revalidate = 60; // Revalidate every 60 seconds (ISR)
 
+// @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function ServicesPage() {
   let products: Product[] = [];
   let error: string | null = null;
@@ -72,6 +75,7 @@ export default async function ServicesPage() {
               <Card key={product.id} className="flex flex-col">
                 {product.featuredImage && (
                   <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
+                    {/* @ToPresent @rendering: next/image for automatic image optimization and lazy loading */}
                     <Image
                       src={product.featuredImage.url}
                       alt={product.featuredImage.altText || product.title}
@@ -103,6 +107,7 @@ export default async function ServicesPage() {
                 </CardContent>
                 <CardFooter>
                   <Button asChild className="w-full">
+                    {/* @ToPresent @rendering: next/link for client-side navigation with automatic prefetching */}
                     <Link href={`/services/${product.handle}`}>
                       View Details
                     </Link>

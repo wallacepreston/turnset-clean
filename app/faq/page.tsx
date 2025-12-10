@@ -9,14 +9,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+// @ToPresent @caching: ISR with 10-minute revalidation for static marketing content
 export const revalidate = 600; // Revalidate every 10 minutes (ISR)
 
+// @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "FAQ | TurnSet Clean",
   description: "Frequently asked questions about our cleaning services.",
 };
 
 export default async function FAQPage() {
+  // @ToPresent @rendering: Fetch FAQ page content from Sanity CMS
   const pageContent = await getPageBySlug("faq");
 
   return (
