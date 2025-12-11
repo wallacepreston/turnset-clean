@@ -35,11 +35,13 @@ export function urlForImage(source: any) {
 }
 
 /**
- * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
+ * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
  * Fetch homepage content from Sanity
  * 
- * Wrapped with React cache() to ensure request deduplication and proper
- * integration with Next.js's revalidate system at the page level.
+ * How it integrates:
+ * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
+ * - Next.js revalidate controls when the page regenerates, creating a new render context
+ * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
  */
 export const getHomepageContent = cache(async (): Promise<HomepageContent | null> => {
   try {
@@ -72,11 +74,13 @@ export const getHomepageContent = cache(async (): Promise<HomepageContent | null
 });
 
 /**
- * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
+ * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
  * Fetch service-specific content by Shopify handle
  * 
- * Wrapped with React cache() to ensure request deduplication and proper
- * integration with Next.js's revalidate system at the page level.
+ * How it integrates:
+ * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
+ * - Next.js revalidate controls when the page regenerates, creating a new render context
+ * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
  */
 export const getServiceContent = cache(async (
   handle: string
@@ -106,11 +110,13 @@ export const getServiceContent = cache(async (
 });
 
 /**
- * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
+ * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
  * Fetch page content by slug
  * 
- * Wrapped with React cache() to ensure request deduplication and proper
- * integration with Next.js's revalidate system at the page level.
+ * How it integrates:
+ * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
+ * - Next.js revalidate controls when the page regenerates, creating a new render context
+ * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
  */
 export const getPageBySlug = cache(async (
   slug: string

@@ -132,7 +132,7 @@ function transformProduct(node: ShopifyProductNode): Product {
 }
 
 /**
- * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
+ * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
  * Fetch all service products from Shopify
  * 
  * Note: The Storefront API only returns products that are:
@@ -140,8 +140,10 @@ function transformProduct(node: ShopifyProductNode): Product {
  * - Available in the sales channel associated with the Storefront API token
  * - Have at least one variant available for sale
  * 
- * Wrapped with React cache() to ensure request deduplication and proper
- * integration with Next.js's revalidate system at the page level.
+ * How it integrates:
+ * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
+ * - Next.js revalidate controls when the page regenerates, creating a new render context
+ * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
  */
 export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
   try {
@@ -218,11 +220,13 @@ export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
 });
 
 /**
- * @ToPresent @caching: React cache() wrapper ensures request deduplication and integrates with Next.js revalidate
+ * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
  * Fetch a single service product by handle from Shopify
  * 
- * Wrapped with React cache() to ensure request deduplication and proper
- * integration with Next.js's revalidate system at the page level.
+ * How it integrates:
+ * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
+ * - Next.js revalidate controls when the page regenerates, creating a new render context
+ * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
  */
 export const getServiceProductByHandle = cache(async (
   handle: string
