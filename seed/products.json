@@ -5,6 +5,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "dish-soap,soap,kitchen,grease-cutting,concentrate",
+    "images": ["turnset_dish_soap_concentrate.png"],
     "variants": [
       { "option1": "8 oz • Citrus", "price": "6.99", "requires_shipping": true, "taxable": true },
       { "option1": "16 oz • Citrus", "price": "10.99", "requires_shipping": true, "taxable": true },
@@ -18,6 +19,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "laundry,detergent,pods,he,stain-fighting",
+    "images": ["turnset_laundry_detergent_pods.png"],
     "variants": [
       { "option1": "30 count • Fresh", "price": "12.99", "requires_shipping": true, "taxable": true },
       { "option1": "60 count • Fresh", "price": "22.99", "requires_shipping": true, "taxable": true },
@@ -30,6 +32,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "laundry,detergent,liquid,linens,towels",
+    "images": ["turnset_liquid_laundry_detergent.png"],
     "variants": [
       { "option1": "64 oz • Fresh Linen", "price": "16.99", "requires_shipping": true, "taxable": true },
       { "option1": "128 oz • Fresh Linen", "price": "28.99", "requires_shipping": true, "taxable": true },
@@ -43,6 +46,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "laundry,oxygen-bleach,stain-remover,brightener,odor",
+    "images": ["oxygen_boost_laundry_powder.png"],
     "variants": [
       { "option1": "2 lb tub", "price": "14.99", "requires_shipping": true, "taxable": true },
       { "option1": "5 lb tub", "price": "27.99", "requires_shipping": true, "taxable": true },
@@ -55,6 +59,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "bleach,disinfecting,laundry,whitening,sanitizing",
+    "images": ["chlorine_bleach_disinfecting.png"],
     "variants": [
       { "option1": "64 oz", "price": "4.99", "requires_shipping": true, "taxable": true },
       { "option1": "121 oz", "price": "7.99", "requires_shipping": true, "taxable": true },
@@ -67,6 +72,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "steam,steam-mop,floor-care,solution,low-foam",
+    "images": ["steam_mop_solution.png"],
     "variants": [
       { "option1": "32 oz • Fresh Linen", "price": "11.99", "requires_shipping": true, "taxable": true },
       { "option1": "32 oz • Citrus", "price": "11.99", "requires_shipping": true, "taxable": true },
@@ -79,6 +85,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "glass,mirror,windows,streak-free,spray",
+    "images": ["glass_mirror_cleaner.png"],
     "variants": [
       { "option1": "16 oz spray", "price": "7.99", "requires_shipping": true, "taxable": true },
       { "option1": "32 oz refill", "price": "12.99", "requires_shipping": true, "taxable": true },
@@ -91,6 +98,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "disinfectant,spray,multi-surface,bathroom,kitchen",
+    "images": ["disinfecting_multi_surface_spray.png"],
     "variants": [
       { "option1": "12 oz spray", "price": "6.99", "requires_shipping": true, "taxable": true },
       { "option1": "24 oz spray", "price": "9.99", "requires_shipping": true, "taxable": true },
@@ -103,6 +111,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "bathroom,limescale,hard-water,soap-scum,gel",
+    "images": ["bathroom_limescale_remover_gel.png"],
     "variants": [
       { "option1": "8 oz", "price": "8.99", "requires_shipping": true, "taxable": true },
       { "option1": "16 oz", "price": "13.99", "requires_shipping": true, "taxable": true },
@@ -115,6 +124,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "degreaser,kitchen,stovetop,hood,grime",
+    "images": ["kitchen_degreaser.png"],
     "variants": [
       { "option1": "16 oz spray", "price": "9.49", "requires_shipping": true, "taxable": true },
       { "option1": "32 oz spray", "price": "14.49", "requires_shipping": true, "taxable": true },
@@ -127,6 +137,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-chemical",
     "tags": "enzyme,stain-remover,odor-remover,pets,upholstery",
+    "images": ["enzyme_stain_odor_remover.png"],
     "variants": [
       { "option1": "16 oz spray", "price": "10.99", "requires_shipping": true, "taxable": true },
       { "option1": "32 oz spray", "price": "16.99", "requires_shipping": true, "taxable": true },
@@ -139,6 +150,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "scrub-brush,tools,grout,tile,bathroom",
+    "images": ["heavy_duty_scrub_brush.png"],
     "variants": [
       { "option1": "Standard hand brush", "price": "6.49", "requires_shipping": true, "taxable": true },
       { "option1": "Palm grip", "price": "7.99", "requires_shipping": true, "taxable": true },
@@ -151,6 +163,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "detail-brush,grout,tools,crevice,fixtures",
+    "images": ["grout_detail_brush_set.png"],
     "variants": [
       { "option1": "2-pack", "price": "7.99", "requires_shipping": true, "taxable": true },
       { "option1": "4-pack", "price": "12.99", "requires_shipping": true, "taxable": true },
@@ -163,6 +176,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "sponges,kitchen,tools,cleaning,pack",
+    "images": ["cellulose_sponge_pack.png"],
     "variants": [
       { "option1": "6-pack", "price": "5.99", "requires_shipping": true, "taxable": true },
       { "option1": "12-pack", "price": "10.99", "requires_shipping": true, "taxable": true },
@@ -175,6 +189,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "microfiber,cloths,dusting,glass,tools",
+    "images": ["microfiber_cloth_pack.png"],
     "variants": [
       { "option1": "12-pack", "price": "12.99", "requires_shipping": true, "taxable": true },
       { "option1": "24-pack", "price": "22.99", "requires_shipping": true, "taxable": true },
@@ -187,6 +202,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "scraper,razor,tools,cooktop,glass",
+    "images": ["razor_scraper_kit.png"],
     "variants": [
       { "option1": "Scraper only", "price": "6.99", "requires_shipping": true, "taxable": true },
       { "option1": "Scraper + 10 blades", "price": "9.99", "requires_shipping": true, "taxable": true },
@@ -199,6 +215,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "broom,dustpan,tools,floors,cleanup",
+    "images": ["angle_broom_dustpan_set.png"],
     "variants": [
       { "option1": "36 in handle", "price": "18.99", "requires_shipping": true, "taxable": true },
       { "option1": "48 in handle", "price": "22.99", "requires_shipping": true, "taxable": true },
@@ -211,6 +228,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "cleaning-tool",
     "tags": "toilet-brush,bathroom,tools,silicone,hygiene",
+    "images": ["silicone_toilet_brush.png"],
     "variants": [
       { "option1": "Single", "price": "12.99", "requires_shipping": true, "taxable": true },
       { "option1": "2-pack", "price": "22.99", "requires_shipping": true, "taxable": true }
@@ -222,6 +240,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "merch",
     "tags": "merch,hoodie,apparel,logo,streetwear",
+    "images": ["turnset_clean_logo_hoodie.png"],
     "variants": [
       { "option1": "Black • S", "price": "49.00", "requires_shipping": true, "taxable": true },
       { "option1": "Black • M", "price": "49.00", "requires_shipping": true, "taxable": true },
@@ -237,6 +256,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "merch",
     "tags": "merch,tshirt,apparel,logo,essentials",
+    "images": ["turnset_clean_logo_t_shirt.png"],
     "variants": [
       { "option1": "White • S", "price": "24.00", "requires_shipping": true, "taxable": true },
       { "option1": "White • M", "price": "24.00", "requires_shipping": true, "taxable": true },
@@ -252,6 +272,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "merch",
     "tags": "merch,mug,drinkware,ceramic,logo",
+    "images": ["turnset_clean_mug.png"],
     "variants": [
       { "option1": "11 oz", "price": "14.00", "requires_shipping": true, "taxable": true },
       { "option1": "15 oz", "price": "16.00", "requires_shipping": true, "taxable": true },
@@ -264,6 +285,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "merch",
     "tags": "merch,backpack,bags,travel,logo",
+    "images": ["turnset_clean_backpack.png"],
     "variants": [
       { "option1": "Black", "price": "64.00", "requires_shipping": true, "taxable": true },
       { "option1": "Navy", "price": "64.00", "requires_shipping": true, "taxable": true },
@@ -276,6 +298,7 @@
     "vendor": "TurnSet Clean",
     "product_type": "merch",
     "tags": "merch,stickers,vinyl,accessories,logo",
+    "images": ["turnset_clean_sticker_pack.png"],
     "variants": [
       { "option1": "5 stickers", "price": "6.00", "requires_shipping": true, "taxable": true },
       { "option1": "10 stickers", "price": "10.00", "requires_shipping": true, "taxable": true },
