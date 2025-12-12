@@ -18,7 +18,6 @@ export function Header() {
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
     { href: "/about", label: "About" },
-    { href: "/how-it-works", label: "How It Works" },
     { href: "/faq", label: "FAQ" },
   ];
 

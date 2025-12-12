@@ -32,14 +32,6 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/how-it-works"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/faq"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
