@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export const revalidate = 60; // Revalidate every 60 seconds (ISR)
 
 // @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
-export default async function ServicesPage() {
+export default async function ProductsPage() {
   let products: Product[] = [];
   let error: string | null = null;
 
@@ -33,7 +33,7 @@ export default async function ServicesPage() {
     error =
       err instanceof Error
         ? err.message
-        : "Failed to load services. Please check your Shopify configuration.";
+        : "Failed to load products. Please check your Shopify configuration.";
     products = [];
   }
 
@@ -107,7 +107,7 @@ export default async function ServicesPage() {
                 <CardFooter>
                   <Button asChild className="w-full">
                     {/* @ToPresent @rendering: next/link for client-side navigation with automatic prefetching */}
-                    <Link href={`/services/${product.handle}`}>
+                    <Link href={`/products/${product.handle}`}>
                       View Details
                     </Link>
                   </Button>
@@ -120,4 +120,3 @@ export default async function ServicesPage() {
     </div>
   );
 }
-

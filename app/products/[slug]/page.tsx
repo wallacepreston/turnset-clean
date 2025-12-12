@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
-export default async function ServiceDetailPage({ params }: Props) {
+export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
   // @ToPresent @rendering: Parallel data fetching from multiple sources (Shopify + Sanity) using Promise.all()
   const [product, serviceContent] = await Promise.all([

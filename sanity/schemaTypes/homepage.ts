@@ -35,7 +35,7 @@ export default defineType({
       name: "heroCtaLink",
       title: "Hero CTA Link",
       type: "string",
-      description: "Call-to-action button link (e.g., /services)",
+      description: "Call-to-action button link (e.g., /products)",
     }),
     defineField({
       name: "howItWorksSteps",
