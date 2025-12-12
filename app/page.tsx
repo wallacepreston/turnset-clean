@@ -43,7 +43,7 @@ export default async function Home() {
         </p>
         {homepageContent?.heroCtaText && (
           <Button size="lg" asChild>
-            <a href={homepageContent.heroCtaLink || "/services"}>
+            <a href={homepageContent.heroCtaLink || "/products"}>
               {homepageContent.heroCtaText}
             </a>
           </Button>
@@ -130,7 +130,7 @@ export default async function Home() {
                 <CardFooter>
                   <Button asChild className="w-full">
                     {/* @ToPresent @rendering: next/link for client-side navigation with automatic prefetching */}
-                    <Link href={`/services/${product.handle}`}>
+                    <Link href={`/products/${product.handle}`}>
                       View Details
                     </Link>
                   </Button>
@@ -141,7 +141,7 @@ export default async function Home() {
           <div className="text-center mt-8">
             <Button variant="outline" asChild>
               {/* @ToPresent: next/link for client-side navigation with automatic prefetching */}
-              <Link href="/services">View All Products</Link>
+              <Link href="/products">View All Products</Link>
             </Button>
           </div>
         </div>
