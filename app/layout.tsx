@@ -7,7 +7,7 @@ import { Providers } from "@/components/Providers";
 // @ToPresent @rendering: Static metadata export for root layout SEO
 export const metadata: Metadata = {
   title: "TurnSet Clean",
-  description: "Professional cleaning services.",
+  description: "Premium cleaning products for every space.",
 };
 
 // @ToPresent @rendering: Root layout is a Server Component by default (all pages are Server Components)

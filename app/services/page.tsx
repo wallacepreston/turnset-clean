@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 
 // @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
-  title: "Services | TurnSet Clean",
-  description: "Choose from our range of professional cleaning services for your property.",
+  title: "Products | TurnSet Clean",
+  description: "Shop premium cleaning products, tools, and merch.",
 };
 
 // @ToPresent @caching: ISR with 60-second revalidation for product listings (pricing changes more frequently)
@@ -41,10 +41,9 @@ export default async function ServicesPage() {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="space-y-8">
         <div className="text-center space-y-4">
-          <h1 className="text-3xl sm:text-4xl font-bold">Our Services</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold">Shop Products</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Choose from our range of professional cleaning services for your
-            property.
+            Stock up on cleaners, detergents, tools, and TurnSet Clean merch.
           </p>
         </div>
 
@@ -61,10 +60,10 @@ export default async function ServicesPage() {
         {products.length === 0 && !error && (
           <div className="rounded-lg border border-dashed p-12 text-center">
             <p className="text-lg font-medium text-muted-foreground">
-              No services available
+              No products available
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              Check back soon for our cleaning services.
+              Check back soon for restocks and new drops.
             </p>
           </div>
         )}
@@ -87,7 +86,7 @@ export default async function ServicesPage() {
                 <CardHeader>
                   <CardTitle>{product.title}</CardTitle>
                   <CardDescription className="line-clamp-2">
-                    {product.description || "Professional cleaning service"}
+                    {product.description || "Premium cleaning product"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
