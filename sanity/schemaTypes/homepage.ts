@@ -71,7 +71,7 @@ export default defineType({
       title: "Who We Serve",
       type: "array",
       of: [{ type: "string" }],
-      description: "List of customer segments (e.g., Airbnb hosts, landlords)",
+      description: "List of customer segments (e.g., homeowners, hosts, landlords)",
     }),
     defineField({
       name: "testimonials",

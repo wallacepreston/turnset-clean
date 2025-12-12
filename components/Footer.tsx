@@ -8,7 +8,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">TurnSet Clean</h3>
             <p className="text-sm text-muted-foreground">
-              Professional cleaning services.
+              Premium cleaning products for every space.
             </p>
           </div>
           <div>
@@ -19,7 +19,7 @@ export function Footer() {
                   href="/services"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Services
+                  Products
                 </Link>
               </li>
               <li>
@@ -51,7 +51,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
             <p className="text-sm text-muted-foreground">
-              Get in touch for professional cleaning services.
+              Questions about products, orders, or restocks? Reach out anytime.
             </p>
           </div>
         </div>

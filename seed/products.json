@@ -1,404 +1,285 @@
 [
   {
-    "title": "Standard Turnover Cleaning",
-    "body_html": "<p>Our Standard Turnover Cleaning is designed for short-term rental hosts and remote property owners who need fast, reliable cleaning between guest stays.</p><p>This service includes:</p><ul><li>Full kitchen cleaning & sanitization</li><li>Bathroom scrub & disinfection</li><li>All surfaces dusted and wiped</li><li>Floors vacuumed and mopped</li><li>Beds stripped and remade (fresh linens must be provided)</li><li>Trash removal & replacement</li><li>Light restocking (toiletries, paper goods — if provided)</li></ul><p>Perfect for:</p><ul><li>Airbnb and VRBO hosts</li><li>Remote landlords</li><li>Mid-term rentals</li><li>Guest-ready turnaround in under 24 hours</li></ul>",
+    "title": "TurnSet Dish Soap Concentrate",
+    "body_html": "<p>A thick, fast-rinsing dish soap concentrate that cuts grease without leaving residue. Great for everyday dishes, cookware, and quick sink cleanups.</p><ul><li>High-foaming concentrate</li><li>Fresh, clean scent options</li><li>Works in hard water</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "standard,turnover,cleaning,rental,airbnb,vrbo,service",
-    "images": [
-      "Standard_Turnover_Cleaning.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "dish-soap,soap,kitchen,grease-cutting,concentrate",
     "variants": [
-      {
-        "option1": "1 bed / 1 bath",
-        "price": "89.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed / 1 bath",
-        "price": "109.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed / 2 bath",
-        "price": "129.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "3 bed / 2 bath",
-        "price": "149.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "4+ bedroom",
-        "price": "179.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "8 oz • Citrus", "price": "6.99", "requires_shipping": true, "taxable": true },
+      { "option1": "16 oz • Citrus", "price": "10.99", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz • Citrus", "price": "17.99", "requires_shipping": true, "taxable": true },
+      { "option1": "1 gal • Citrus", "price": "39.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Deep Cleaning Service",
-    "body_html": "<p>Our Deep Cleaning Service is ideal for properties that need more than a standard turnover — perfect after long-term stays, seasonal use, or before high-value guests arrive.</p>",
+    "title": "TurnSet Laundry Detergent Pods",
+    "body_html": "<p>Pre-measured detergent pods for clean, consistent loads—no mess, no guessing. Designed for everyday laundry and high-efficiency machines.</p><ul><li>HE-compatible</li><li>Color-safe</li><li>Easy storage</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "deep-clean,cleaning,rental,airbnb,vrbo,service,heavy-use",
-    "images": [
-      "Deep_Cleaning_Service.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "laundry,detergent,pods,he,stain-fighting",
     "variants": [
-      {
-        "option1": "1 bed / 1 bath",
-        "price": "159.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed / 1 bath",
-        "price": "199.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "3 bed / 2 bath",
-        "price": "249.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "4+ bed / 2+ bath",
-        "price": "299.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "30 count • Fresh", "price": "12.99", "requires_shipping": true, "taxable": true },
+      { "option1": "60 count • Fresh", "price": "22.99", "requires_shipping": true, "taxable": true },
+      { "option1": "120 count • Fresh", "price": "39.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Move-In / Move-Out Cleaning",
-    "body_html": "<p>Detailed cleaning for empty units prior to new tenants. Perfect for landlords and property managers preparing units for new residents.</p>",
+    "title": "TurnSet Liquid Laundry Detergent",
+    "body_html": "<p>A concentrated liquid laundry detergent that lifts stains and rinses clean. Great for towels, linens, and everyday wear.</p><ul><li>Concentrated formula</li><li>Works in cold water</li><li>Great for linens and towels</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "move-in,move-out,cleaning,rental,property-management,detailed",
-    "images": [
-      "Move-In_Move-Out_Cleaning.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "laundry,detergent,liquid,linens,towels",
     "variants": [
-      {
-        "option1": "1 bed / 1 bath",
-        "price": "179.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed / 1 bath",
-        "price": "219.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "3 bed / 2 bath",
-        "price": "279.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "4+ bed / 2+ bath",
-        "price": "329.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "64 oz • Fresh Linen", "price": "16.99", "requires_shipping": true, "taxable": true },
+      { "option1": "128 oz • Fresh Linen", "price": "28.99", "requires_shipping": true, "taxable": true },
+      { "option1": "64 oz • Free & Clear", "price": "17.99", "requires_shipping": true, "taxable": true },
+      { "option1": "128 oz • Free & Clear", "price": "30.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Commercial Office Cleaning",
-    "body_html": "<p>Recurring or one-time cleaning for small offices. Professional service to keep your workspace clean and productive.</p>",
+    "title": "Oxygen Boost Laundry Powder",
+    "body_html": "<p>Oxygen-powered booster for whites and colors. Helps brighten, deodorize, and tackle set-in stains on linens and activewear.</p><ul><li>Color-safe oxygen bleach</li><li>Great for soaking</li><li>Deodorizes fabrics</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "commercial,office,cleaning,business,recurring",
-    "images": [
-      "Commercial_Office_Cleaning.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "laundry,oxygen-bleach,stain-remover,brightener,odor",
     "variants": [
-      {
-        "option1": "Small office (up to 500 sq ft)",
-        "price": "199.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Medium office (500-1000 sq ft)",
-        "price": "299.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Large office (1000-2000 sq ft)",
-        "price": "399.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Extra large (2000+ sq ft)",
-        "price": "499.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "2 lb tub", "price": "14.99", "requires_shipping": true, "taxable": true },
+      { "option1": "5 lb tub", "price": "27.99", "requires_shipping": true, "taxable": true },
+      { "option1": "10 lb bucket", "price": "49.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Post-Construction Cleanup",
-    "body_html": "<p>Debris removal, dust scrub, and finish cleaning after renovations. Get your property move-in ready after construction work.</p>",
+    "title": "Chlorine Bleach (Disinfecting)",
+    "body_html": "<p>Classic disinfecting bleach for deep sanitizing tasks. Ideal for laundry whitening and hard-surface disinfection when used as directed.</p><ul><li>Disinfecting strength</li><li>Whitening power</li><li>For laundry and hard surfaces</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "construction,post-construction,cleanup,debris-removal,renovation",
-    "images": [
-      "Post-Construction_Cleanup.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "bleach,disinfecting,laundry,whitening,sanitizing",
     "variants": [
-      {
-        "option1": "Small project (1-2 rooms)",
-        "price": "249.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Medium project (3-4 rooms)",
-        "price": "349.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Large project (entire unit)",
-        "price": "449.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Full house renovation",
-        "price": "599.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "64 oz", "price": "4.99", "requires_shipping": true, "taxable": true },
+      { "option1": "121 oz", "price": "7.99", "requires_shipping": true, "taxable": true },
+      { "option1": "Splash-less • 121 oz", "price": "8.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Laundry & Linen Service",
-    "body_html": "<p>Washing, drying, folding, and bed remake add-on. Perfect for busy hosts who need help with laundry turnover.</p>",
+    "title": "Steam Mop Solution",
+    "body_html": "<p>Low-foam steam mop solution that helps lift grime without leaving sticky residue. Made for sealed tile, vinyl, and sealed hardwood (check manufacturer guidance).</p><ul><li>Residue-minimizing formula</li><li>Freshens rooms</li><li>Great for quick refreshes</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "add-on-service",
-    "tags": "laundry,linen,add-on,bed-making,cleaning",
-    "images": [
-      "Laundry_Linen_Service.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "steam,steam-mop,floor-care,solution,low-foam",
     "variants": [
-      {
-        "option1": "1 bed set",
-        "price": "49.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed set",
-        "price": "79.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "3 bed set",
-        "price": "109.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "4+ bed set",
-        "price": "139.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "32 oz • Fresh Linen", "price": "11.99", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz • Citrus", "price": "11.99", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz • Unscented", "price": "12.49", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Refrigerator & Oven Deep Clean",
-    "body_html": "<p>Interior appliance scrub as an add-on or standalone service. Deep cleaning for refrigerators and ovens to ensure they're guest-ready.</p>",
+    "title": "Glass & Mirror Cleaner",
+    "body_html": "<p>Streak-free cleaner for mirrors, windows, and glass tabletops. Quick-drying formula for a clean, clear finish.</p><ul><li>Streak-free finish</li><li>Quick-drying</li><li>Great for mirrors and windows</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "add-on-service",
-    "tags": "appliance,refrigerator,oven,deep-clean,add-on",
-    "images": [
-      "Refrigerator_Oven_Deep_Clean.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "glass,mirror,windows,streak-free,spray",
     "variants": [
-      {
-        "option1": "Refrigerator only",
-        "price": "49.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Oven only",
-        "price": "49.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Both appliances",
-        "price": "79.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "All kitchen appliances",
-        "price": "119.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "16 oz spray", "price": "7.99", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz refill", "price": "12.99", "requires_shipping": true, "taxable": true },
+      { "option1": "1 gal refill", "price": "29.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Same-Day Emergency Cleaning",
-    "body_html": "<p>Urgent turnaround service for unexpected guest issues. Available for same-day booking when you need immediate cleaning support.</p>",
+    "title": "Disinfecting Multi-Surface Spray",
+    "body_html": "<p>A ready-to-use disinfecting spray for high-touch surfaces like doorknobs, counters, and bathroom fixtures. Use as directed for contact time.</p><ul><li>For kitchens and bathrooms</li><li>Great for high-touch surfaces</li><li>Fresh, clean scent</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "emergency,same-day,urgent,cleaning,last-minute",
-    "images": [
-      "Same-Day_Emergency_Cleaning.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "disinfectant,spray,multi-surface,bathroom,kitchen",
     "variants": [
-      {
-        "option1": "1 bed / 1 bath",
-        "price": "229.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed / 1 bath",
-        "price": "279.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "3 bed / 2 bath",
-        "price": "329.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "4+ bed / 2+ bath",
-        "price": "379.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "12 oz spray", "price": "6.99", "requires_shipping": true, "taxable": true },
+      { "option1": "24 oz spray", "price": "9.99", "requires_shipping": true, "taxable": true },
+      { "option1": "12 oz • 4-pack", "price": "24.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Pet-Friendly Cleaning Package",
-    "body_html": "<p>Odor removal, pet hair mitigation, and allergen reduction. Specialized cleaning for properties that welcome pets.</p>",
+    "title": "Bathroom Limescale Remover Gel",
+    "body_html": "<p>A clinging gel that targets soap scum, hard-water spots, and limescale on tile, tubs, and shower doors.</p><ul><li>Clings to vertical surfaces</li><li>Targets mineral buildup</li><li>Great for showers and tubs</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "cleaning-service",
-    "tags": "pet-friendly,pets,odor-removal,allergen-reduction,specialized",
-    "images": [
-      "Pet-Friendly_Cleaning_Package.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "bathroom,limescale,hard-water,soap-scum,gel",
     "variants": [
-      {
-        "option1": "1 bed / 1 bath",
-        "price": "189.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "2 bed / 1 bath",
-        "price": "229.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "3 bed / 2 bath",
-        "price": "279.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "4+ bed / 2+ bath",
-        "price": "329.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "8 oz", "price": "8.99", "requires_shipping": true, "taxable": true },
+      { "option1": "16 oz", "price": "13.99", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz", "price": "22.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Outdoor Patio / Balcony Sweep & Wipe",
-    "body_html": "<p>Light outdoor refresh for rentals with patios. Keep outdoor spaces clean and welcoming for guests.</p>",
+    "title": "Kitchen Degreaser",
+    "body_html": "<p>A fast-acting degreaser for stovetops, backsplashes, range hoods, and greasy messes. Wipes clean with minimal scrubbing.</p><ul><li>Cuts cooked-on grease</li><li>Great for kitchens</li><li>Works on many hard surfaces</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "add-on-service",
-    "tags": "outdoor,patio,balcony,add-on,exterior",
-    "images": [
-      "Outdoor_Patio_Balcony_Sweep_Wipe.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "degreaser,kitchen,stovetop,hood,grime",
     "variants": [
-      {
-        "option1": "Small patio/balcony (up to 100 sq ft)",
-        "price": "39.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Medium patio/balcony (100-200 sq ft)",
-        "price": "59.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Large patio/balcony (200-400 sq ft)",
-        "price": "79.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Extra large (400+ sq ft)",
-        "price": "99.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "16 oz spray", "price": "9.49", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz spray", "price": "14.49", "requires_shipping": true, "taxable": true },
+      { "option1": "1 gal refill", "price": "34.99", "requires_shipping": true, "taxable": true }
     ]
   },
   {
-    "title": "Restocking Essentials Service",
-    "body_html": "<p>Toiletries, paper goods, and consumables restock (materials provided by host). Convenient restocking service to keep your property well-stocked.</p>",
+    "title": "Enzyme Stain & Odor Remover",
+    "body_html": "<p>An enzyme-based cleaner that helps break down organic stains and odors. Great for carpets, upholstery, and pet messes (test on an inconspicuous area).</p><ul><li>Targets organic stains</li><li>Helps neutralize odors</li><li>Great for pet homes</li></ul>",
     "vendor": "TurnSet Clean",
-    "product_type": "add-on-service",
-    "tags": "restocking,essentials,toiletries,add-on,consumables",
-    "images": [
-      "Restocking_Essentials_Service.png"
-    ],
+    "product_type": "cleaning-chemical",
+    "tags": "enzyme,stain-remover,odor-remover,pets,upholstery",
     "variants": [
-      {
-        "option1": "Basic restock (1 bathroom)",
-        "price": "29.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Standard restock (2 bathrooms)",
-        "price": "49.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Full restock (3+ bathrooms)",
-        "price": "69.00",
-        "requires_shipping": false,
-        "taxable": false
-      },
-      {
-        "option1": "Premium restock (full property)",
-        "price": "89.00",
-        "requires_shipping": false,
-        "taxable": false
-      }
+      { "option1": "16 oz spray", "price": "10.99", "requires_shipping": true, "taxable": true },
+      { "option1": "32 oz spray", "price": "16.99", "requires_shipping": true, "taxable": true },
+      { "option1": "1 gal refill", "price": "39.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Heavy-Duty Scrub Brush",
+    "body_html": "<p>Stiff-bristle scrub brush for tubs, tile, grout lines, and outdoor messes. Built to stand up to tough scrubbing.</p><ul><li>Stiff bristles</li><li>Comfort grip options</li><li>Great for tile and grout</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "scrub-brush,tools,grout,tile,bathroom",
+    "variants": [
+      { "option1": "Standard hand brush", "price": "6.49", "requires_shipping": true, "taxable": true },
+      { "option1": "Palm grip", "price": "7.99", "requires_shipping": true, "taxable": true },
+      { "option1": "Long handle", "price": "12.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Grout & Detail Brush Set",
+    "body_html": "<p>A multi-brush set for corners, grout lines, fixtures, and small crevices. Great for kitchens, bathrooms, and appliances.</p><ul><li>Detail-focused shapes</li><li>Great for corners and crevices</li><li>Reusable and durable</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "detail-brush,grout,tools,crevice,fixtures",
+    "variants": [
+      { "option1": "2-pack", "price": "7.99", "requires_shipping": true, "taxable": true },
+      { "option1": "4-pack", "price": "12.99", "requires_shipping": true, "taxable": true },
+      { "option1": "8-pack", "price": "21.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Cellulose Sponge Pack",
+    "body_html": "<p>Absorbent cellulose sponges for dishes and everyday wipe-downs. Durable enough for repeat use and quick rinsing.</p><ul><li>Highly absorbent</li><li>Everyday kitchen use</li><li>Great value multipacks</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "sponges,kitchen,tools,cleaning,pack",
+    "variants": [
+      { "option1": "6-pack", "price": "5.99", "requires_shipping": true, "taxable": true },
+      { "option1": "12-pack", "price": "10.99", "requires_shipping": true, "taxable": true },
+      { "option1": "24-pack", "price": "19.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Microfiber Cloth Pack",
+    "body_html": "<p>Lint-free microfiber cloths for dusting, glass, counters, and stainless steel. Great for streak-free wipe-downs.</p><ul><li>Lint-free microfiber</li><li>Reusable and washable</li><li>Multi-surface friendly</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "microfiber,cloths,dusting,glass,tools",
+    "variants": [
+      { "option1": "12-pack", "price": "12.99", "requires_shipping": true, "taxable": true },
+      { "option1": "24-pack", "price": "22.99", "requires_shipping": true, "taxable": true },
+      { "option1": "48-pack", "price": "39.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Razor Scraper Kit",
+    "body_html": "<p>A precision scraper for glass cooktops, windows, and stubborn stuck-on grime. Use with care and keep blades safely stored.</p><ul><li>Great for stuck-on residue</li><li>Includes blade options</li><li>Compact, easy to store</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "scraper,razor,tools,cooktop,glass",
+    "variants": [
+      { "option1": "Scraper only", "price": "6.99", "requires_shipping": true, "taxable": true },
+      { "option1": "Scraper + 10 blades", "price": "9.99", "requires_shipping": true, "taxable": true },
+      { "option1": "Scraper + 50 blades", "price": "16.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Angle Broom + Dustpan Set",
+    "body_html": "<p>An everyday broom and dustpan combo for quick cleanups. The angled bristles reach corners and baseboards with ease.</p><ul><li>Angled bristles for corners</li><li>Sturdy dustpan</li><li>Great for home or office</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "broom,dustpan,tools,floors,cleanup",
+    "variants": [
+      { "option1": "36 in handle", "price": "18.99", "requires_shipping": true, "taxable": true },
+      { "option1": "48 in handle", "price": "22.99", "requires_shipping": true, "taxable": true },
+      { "option1": "Lobby set (wide pan)", "price": "26.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "Silicone Toilet Brush",
+    "body_html": "<p>A modern silicone toilet brush designed to rinse cleaner and dry faster than traditional bristles. Great for bathrooms and powder rooms.</p><ul><li>Quick-rinse silicone head</li><li>Includes holder</li><li>Great for daily maintenance</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "cleaning-tool",
+    "tags": "toilet-brush,bathroom,tools,silicone,hygiene",
+    "variants": [
+      { "option1": "Single", "price": "12.99", "requires_shipping": true, "taxable": true },
+      { "option1": "2-pack", "price": "22.99", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "TurnSet Clean Logo Hoodie",
+    "body_html": "<p>Cozy, midweight hoodie with the TurnSet Clean logo. Perfect for weekend cleanups, gym sessions, and everyday wear.</p><ul><li>Soft fleece interior</li><li>Unisex fit</li><li>Front pocket</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "merch",
+    "tags": "merch,hoodie,apparel,logo,streetwear",
+    "variants": [
+      { "option1": "Black • S", "price": "49.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Black • M", "price": "49.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Black • L", "price": "49.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Heather Gray • S", "price": "49.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Heather Gray • M", "price": "49.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Heather Gray • L", "price": "49.00", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "TurnSet Clean Logo T-Shirt",
+    "body_html": "<p>Classic tee with a clean, minimal TurnSet Clean mark. Breathable, comfortable, and easy to layer.</p><ul><li>Unisex fit</li><li>Soft cotton blend</li><li>Everyday essential</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "merch",
+    "tags": "merch,tshirt,apparel,logo,essentials",
+    "variants": [
+      { "option1": "White • S", "price": "24.00", "requires_shipping": true, "taxable": true },
+      { "option1": "White • M", "price": "24.00", "requires_shipping": true, "taxable": true },
+      { "option1": "White • L", "price": "24.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Black • S", "price": "24.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Black • M", "price": "24.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Black • L", "price": "24.00", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "TurnSet Clean Mug",
+    "body_html": "<p>Durable ceramic mug for coffee, tea, or a well-earned break after a deep clean.</p><ul><li>Ceramic</li><li>Dishwasher-safe</li><li>Minimal logo</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "merch",
+    "tags": "merch,mug,drinkware,ceramic,logo",
+    "variants": [
+      { "option1": "11 oz", "price": "14.00", "requires_shipping": true, "taxable": true },
+      { "option1": "15 oz", "price": "16.00", "requires_shipping": true, "taxable": true },
+      { "option1": "11 oz • 2-pack", "price": "26.00", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "TurnSet Clean Backpack",
+    "body_html": "<p>Everyday backpack with a subtle TurnSet Clean logo—great for commuting, travel, or carrying your cleaning kit.</p><ul><li>Padded straps</li><li>Laptop sleeve</li><li>Durable fabric</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "merch",
+    "tags": "merch,backpack,bags,travel,logo",
+    "variants": [
+      { "option1": "Black", "price": "64.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Navy", "price": "64.00", "requires_shipping": true, "taxable": true },
+      { "option1": "Olive", "price": "64.00", "requires_shipping": true, "taxable": true }
+    ]
+  },
+  {
+    "title": "TurnSet Clean Sticker Pack",
+    "body_html": "<p>A pack of waterproof vinyl stickers for bottles, laptops, toolboxes, and more.</p><ul><li>Waterproof vinyl</li><li>Matte finish</li><li>Great for gifts</li></ul>",
+    "vendor": "TurnSet Clean",
+    "product_type": "merch",
+    "tags": "merch,stickers,vinyl,accessories,logo",
+    "variants": [
+      { "option1": "5 stickers", "price": "6.00", "requires_shipping": true, "taxable": true },
+      { "option1": "10 stickers", "price": "10.00", "requires_shipping": true, "taxable": true },
+      { "option1": "25 stickers", "price": "20.00", "requires_shipping": true, "taxable": true }
     ]
   }
 ]

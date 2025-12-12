@@ -2,34 +2,34 @@ import { defineType, defineField } from "sanity";
 
 export default defineType({
   name: "servicePageContent",
-  title: "Service Page Content",
+  title: "Product Page Content",
   type: "document",
   fields: [
     defineField({
       name: "serviceHandle",
-      title: "Service Handle",
+      title: "Product Handle",
       type: "string",
       description:
-        "Must match the Shopify product handle (e.g., 'deep-cleaning-service')",
+        "Must match the Shopify product handle (e.g., 'turnset-dish-soap-concentrate')",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "whatIsIncluded",
-      title: "What's Included",
+      title: "Details / How to Use",
       type: "array",
       of: [
         {
           type: "block",
         },
       ],
-      description: "Rich text content describing what's included in the service",
+      description: "Rich text content describing usage, ingredients, and details",
     }),
     defineField({
       name: "bestFor",
       title: "Best For",
       type: "array",
       of: [{ type: "string" }],
-      description: "List of use cases (e.g., 'Move-outs', 'Heavy use units')",
+      description: "List of use cases (e.g., 'Kitchen grease', 'Hard water', 'Pet odors')",
     }),
     defineField({
       name: "beforeAfterImages",
@@ -91,7 +91,7 @@ export default defineType({
     },
     prepare({ title }) {
       return {
-        title: `Service: ${title}`,
+        title: `Product: ${title}`,
       };
     },
   },
