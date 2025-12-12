@@ -49,13 +49,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: "Service Not Found | TurnSet Clean",
+      title: "Product Not Found | TurnSet Clean",
     };
   }
 
   return {
     title: `${product.title} | TurnSet Clean`,
-    description: product.description || "Professional cleaning service",
+    description: product.description || "Premium cleaning product",
   };
 }
 
@@ -117,7 +117,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <CardHeader>
                   <CardTitle>Options</CardTitle>
                   <CardDescription>
-                    Choose from available service options
+                    Choose from available product options
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -153,7 +153,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             )}
 
             <Button size="lg" className="w-full">
-              Book Now
+              Add to Cart
             </Button>
           </div>
         </div>

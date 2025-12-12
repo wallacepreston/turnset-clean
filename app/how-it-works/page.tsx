@@ -9,7 +9,7 @@ export const revalidate = 600; // Revalidate every 10 minutes (ISR)
 // @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "How It Works | TurnSet Clean",
-  description: "Our step-by-step process for professional cleaning services.",
+  description: "How we help you choose the right cleaning products.",
 };
 
 export default async function HowItWorksPage() {

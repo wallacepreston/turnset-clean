@@ -39,7 +39,7 @@ export default async function Home() {
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           {homepageContent?.heroSubtitle ||
-            "Professional cleaning services. Trusted by homeowners, businesses, remote hosts, landlords, and property managers."}
+            "Premium cleaning products and tools—trusted by homeowners, hosts, landlords, and property managers."}
         </p>
         {homepageContent?.heroCtaText && (
           <Button size="lg" asChild>
@@ -88,13 +88,13 @@ export default async function Home() {
         </div>
       )}
 
-      {/* Featured Services Section */}
+      {/* Featured Products Section */}
       {featured.length > 0 && (
         <div className="mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Featured Services</h2>
+            <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Discover our most popular cleaning services
+              Shop best-sellers in cleaners, tools, and merch
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -114,7 +114,7 @@ export default async function Home() {
                 <CardHeader>
                   <CardTitle>{product.title}</CardTitle>
                   <CardDescription className="line-clamp-2">
-                    {product.description || "Professional cleaning service"}
+                    {product.description || "Premium cleaning product"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
@@ -141,7 +141,7 @@ export default async function Home() {
           <div className="text-center mt-8">
             <Button variant="outline" asChild>
               {/* @ToPresent: next/link for client-side navigation with automatic prefetching */}
-              <Link href="/services">View All Services</Link>
+              <Link href="/services">View All Products</Link>
             </Button>
           </div>
         </div>
