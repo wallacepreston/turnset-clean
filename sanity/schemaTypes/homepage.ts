@@ -38,42 +38,6 @@ export default defineType({
       description: "Call-to-action button link (e.g., /products)",
     }),
     defineField({
-      name: "howItWorksSteps",
-      title: "How It Works Steps",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            {
-              name: "title",
-              title: "Title",
-              type: "string",
-            },
-            {
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 3,
-            },
-            {
-              name: "icon",
-              title: "Icon",
-              type: "string",
-              description: "Icon name or identifier",
-            },
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: "whoWeServe",
-      title: "Who We Serve",
-      type: "array",
-      of: [{ type: "string" }],
-      description: "List of customer segments (e.g., homeowners, hosts, landlords)",
-    }),
-    defineField({
       name: "testimonials",
       title: "Testimonials",
       type: "array",

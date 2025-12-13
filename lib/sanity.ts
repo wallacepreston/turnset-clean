@@ -51,12 +51,6 @@ export const getHomepageContent = cache(async (): Promise<HomepageContent | null
       heroSubtitle,
       heroCtaText,
       heroCtaLink,
-      howItWorksSteps[] {
-        title,
-        description,
-        icon
-      },
-      whoWeServe[],
       testimonials[] {
         name,
         quote,

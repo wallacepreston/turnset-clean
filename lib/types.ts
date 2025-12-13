@@ -80,12 +80,6 @@ export interface HomepageContent {
   heroSubtitle?: string;
   heroCtaText?: string;
   heroCtaLink?: string;
-  howItWorksSteps?: Array<{
-    title?: string;
-    description?: string;
-    icon?: string;
-  }>;
-  whoWeServe?: string[];
   testimonials?: Array<{
     name?: string;
     quote?: string;

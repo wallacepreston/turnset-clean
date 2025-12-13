@@ -50,44 +50,6 @@ export default async function Home() {
         )}
       </div>
 
-      {/* How It Works Section */}
-      {homepageContent?.howItWorksSteps &&
-        homepageContent.howItWorksSteps.length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              How It Works
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {homepageContent.howItWorksSteps.map((step, index) => (
-                <div key={index} className="text-center space-y-4">
-                  <div className="text-4xl font-bold text-primary">
-                    {index + 1}
-                  </div>
-                  <h3 className="text-xl font-semibold">{step.title}</h3>
-                  <p className="text-muted-foreground">{step.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-      {/* Who We Serve Section */}
-      {homepageContent?.whoWeServe && homepageContent.whoWeServe.length > 0 && (
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Who We Serve</h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            {homepageContent.whoWeServe.map((segment, index) => (
-              <span
-                key={index}
-                className="px-4 py-2 rounded-full bg-secondary text-secondary-foreground"
-              >
-                {segment}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Featured Products Section */}
       {featured.length > 0 && (
         <div className="mb-16">
