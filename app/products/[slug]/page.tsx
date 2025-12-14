@@ -13,6 +13,7 @@ import {
 import { PortableText } from "@portabletext/react";
 import { portableTextComponents } from "@/components/PortableTextComponents";
 import { AddToCartButton } from "@/components/AddToCartButton";
+import { TrackProductView } from "@/components/TrackProductView";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -80,6 +81,8 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Track product view for recently viewed functionality */}
+      <TrackProductView handle={slug} />
       <div className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Image */}

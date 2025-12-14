@@ -5,14 +5,7 @@ import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import Link from "next/link";
 import { urlForImage } from "@/lib/sanity";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { RecentlyViewed } from "@/components/RecentlyViewed";
 
 // @ToPresent @caching: ISR with 5-minute revalidation for homepage (balances freshness with performance)
 export const revalidate = 300; // Revalidate every 5 minutes (ISR)
@@ -50,63 +43,9 @@ export default async function Home() {
         )}
       </div>
 
-      {/* Featured Products Section */}
+      {/* Recently Viewed / Featured Products Section */}
       {featured.length > 0 && (
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Shop best-sellers in cleaners, tools, and merch
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured.map((product) => (
-              <Card key={product.id} className="flex flex-col">
-                {product.featuredImage && (
-                  <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
-                    {/* @ToPresent @rendering: next/image for automatic image optimization and lazy loading */}
-                    <Image
-                      src={product.featuredImage.url}
-                      alt={product.featuredImage.altText || product.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-                <CardHeader>
-                  <CardTitle>{product.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {product.description || "Premium cleaning product"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <p className="text-2xl font-bold">
-                    {new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: product.priceRange.minVariantPrice.currencyCode,
-                    }).format(
-                      parseFloat(product.priceRange.minVariantPrice.amount)
-                    )}
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button asChild className="w-full">
-                    {/* @ToPresent @rendering: next/link for client-side navigation with automatic prefetching */}
-                    <Link href={`/products/${product.handle}`}>
-                      View Details
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <Button variant="outline" asChild>
-              {/* @ToPresent: next/link for client-side navigation with automatic prefetching */}
-              <Link href="/products">View All Products</Link>
-            </Button>
-          </div>
-        </div>
+        <RecentlyViewed featuredProducts={featured} />
       )}
 
       {/* Testimonials Section */}
