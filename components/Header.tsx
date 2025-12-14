@@ -8,11 +8,14 @@ import { cn } from "@/lib/utils";
 import { LogoTurnsetIcon } from "@/components/LogoTurnsetIcon";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
 
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { cart } = useCart();
+  const cartItemCount = cart?.totalQuantity || 0;
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -74,6 +77,23 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/cart"
+              onClick={() => setMobileMenuOpen(false)}
+              className={cn(
+                "flex items-center justify-between h-12 px-4 rounded-md text-sm font-medium transition-colors",
+                pathname === "/cart"
+                  ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground"
+                  : "text-foreground hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
+              <span>Cart</span>
+              {cartItemCount > 0 && (
+                <span className="ml-2 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
+                  {cartItemCount > 99 ? "99+" : cartItemCount}
+                </span>
+              )}
+            </Link>
           </nav>
         </div>
       </aside>
@@ -113,6 +133,22 @@ export function Header() {
               ))}
             </nav>
             <div className="flex items-center space-x-4">
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="relative"
+                aria-label="Shopping cart"
+              >
+                <Link href="/cart">
+                  <ShoppingCart className="h-5 w-5" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
+                      {cartItemCount > 99 ? "99+" : cartItemCount}
+                    </span>
+                  )}
+                </Link>
+              </Button>
               <ThemeToggle />
             </div>
           </div>

@@ -131,3 +131,36 @@ export const getPageBySlug = cache(async (
   }
 });
 
+/**
+ * Submit a testimonial for review
+ * Requires write token (SANITY_API_TOKEN)
+ */
+export async function submitTestimonial(data: {
+  name: string;
+  email: string;
+  quote: string;
+  role?: string;
+  avatar?: any;
+}): Promise<string> {
+  const client = getSanityClient();
+  
+  // Ensure we have a write token
+  if (!client.config().token) {
+    throw new Error("SANITY_API_TOKEN is required to submit testimonials");
+  }
+
+  const testimonial = {
+    _type: "testimonialSubmission",
+    name: data.name,
+    email: data.email,
+    quote: data.quote,
+    role: data.role || undefined,
+    avatar: data.avatar || undefined,
+    status: "pending",
+    submittedAt: new Date().toISOString(),
+  };
+
+  const result = await client.create(testimonial);
+  return result._id;
+}
+

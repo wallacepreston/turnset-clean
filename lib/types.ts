@@ -114,3 +114,42 @@ export interface PageContent {
   content?: any; // Rich text/portable text
 }
 
+// Shopify Cart Types
+export interface Cart {
+  id: string;
+  checkoutUrl: string;
+  totalQuantity: number;
+  cost: {
+    totalAmount: {
+      amount: string;
+      currencyCode: string;
+    };
+  };
+  lines: {
+    edges: Array<{
+      node: CartLine;
+    }>;
+  };
+}
+
+export interface CartLine {
+  id: string;
+  quantity: number;
+  merchandise: {
+    id: string;
+    title: string;
+    product: {
+      title: string;
+      handle: string;
+      featuredImage?: {
+        url: string;
+        altText?: string;
+      };
+    };
+    price: {
+      amount: string;
+      currencyCode: string;
+    };
+  };
+}
+

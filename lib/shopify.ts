@@ -7,14 +7,33 @@ import type {
   ShopifyProductNode,
   ShopifyProductsResponse,
   ShopifyProductResponse,
+  Cart,
+  CartLine,
 } from "./types";
 
 // Initialize Shopify client
 function getShopifyClient() {
   const env = getEnv();
+  
   // Extract store domain from URL (e.g., "https://store.myshopify.com/api/..." -> "store.myshopify.com")
-  const url = new URL(env.SHOPIFY_STOREFRONT_API_URL);
-  const storeDomain = url.hostname;
+  let storeDomain: string;
+  try {
+    const url = new URL(env.SHOPIFY_STOREFRONT_API_URL);
+    storeDomain = url.hostname;
+    
+    // Validate the URL format
+    if (!storeDomain.includes("myshopify.com") && !storeDomain.includes("shopifycdn.com")) {
+      console.warn(
+        `Warning: Store domain "${storeDomain}" doesn't look like a Shopify domain. ` +
+          "Expected format: store-name.myshopify.com"
+      );
+    }
+  } catch (urlError) {
+    throw new Error(
+      `Invalid SHOPIFY_STOREFRONT_API_URL format: ${env.SHOPIFY_STOREFRONT_API_URL}. ` +
+        "Expected format: https://store-name.myshopify.com/api/2025-01/graphql.json"
+    );
+  }
 
   // Validate token format (Storefront tokens are typically longer and don't start with shpat_)
   const token = env.SHOPIFY_STOREFRONT_API_TOKEN.trim();
@@ -25,11 +44,25 @@ function getShopifyClient() {
     );
   }
 
-  return createStorefrontApiClient({
-    storeDomain,
-    apiVersion: "2025-01",
-    publicAccessToken: token,
-  });
+  if (!token || token.length < 10) {
+    throw new Error(
+      "Invalid SHOPIFY_STOREFRONT_API_TOKEN: Token appears to be empty or too short. " +
+        "Please verify your environment variables."
+    );
+  }
+
+  try {
+    return createStorefrontApiClient({
+      storeDomain,
+      apiVersion: "2025-01",
+      publicAccessToken: token,
+    });
+  } catch (clientError) {
+    throw new Error(
+      `Failed to create Shopify client: ${clientError instanceof Error ? clientError.message : "Unknown error"}. ` +
+        `Store domain: ${storeDomain}, API version: 2025-01`
+    );
+  }
 }
 
 // GraphQL query to fetch all products
@@ -158,6 +191,23 @@ export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
           ? String(response.errors.message)
           : "Unknown Shopify API error";
       
+      // Handle network-level errors (fetch failed)
+      if (
+        typeof response.errors === "object" &&
+        "message" in response.errors &&
+        String(response.errors.message).includes("fetch failed")
+      ) {
+        console.error("Shopify network error:", response.errors);
+        throw new Error(
+          "Shopify API network error: Failed to connect to Shopify. " +
+            "Please verify:\n" +
+            "1. Your SHOPIFY_STOREFRONT_API_URL is correct and accessible\n" +
+            "2. Your network connection is working\n" +
+            "3. The Shopify store is online and accessible\n" +
+            `Original error: ${errorMessage}`
+        );
+      }
+      
       // Provide helpful error message for 401 errors
       if (
         typeof response.errors === "object" &&
@@ -214,8 +264,24 @@ export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
 
     return products;
   } catch (error) {
+    // Re-throw if it's already a formatted error
+    if (error instanceof Error && error.message.includes("Shopify API")) {
+      throw error;
+    }
+    
+    // Handle network errors that weren't caught above
+    if (error instanceof Error && error.message.includes("fetch")) {
+      console.error("Network error fetching products from Shopify:", error);
+      throw new Error(
+        "Failed to fetch products from Shopify: Network error. " +
+          "Please check your SHOPIFY_STOREFRONT_API_URL and network connection."
+      );
+    }
+    
     console.error("Error fetching products from Shopify:", error);
-    throw new Error("Failed to fetch products from Shopify");
+    throw new Error(
+      `Failed to fetch products from Shopify: ${error instanceof Error ? error.message : "Unknown error"}`
+    );
   }
 });
 
@@ -242,6 +308,23 @@ export const getServiceProductByHandle = cache(async (
         typeof response.errors === "object" && "message" in response.errors
           ? String(response.errors.message)
           : "Unknown Shopify API error";
+      
+      // Handle network-level errors (fetch failed)
+      if (
+        typeof response.errors === "object" &&
+        "message" in response.errors &&
+        String(response.errors.message).includes("fetch failed")
+      ) {
+        console.error("Shopify network error:", response.errors);
+        throw new Error(
+          "Shopify API network error: Failed to connect to Shopify. " +
+            "Please verify:\n" +
+            "1. Your SHOPIFY_STOREFRONT_API_URL is correct and accessible\n" +
+            "2. Your network connection is working\n" +
+            "3. The Shopify store is online and accessible\n" +
+            `Original error: ${errorMessage}`
+        );
+      }
       
       // Provide helpful error message for 401 errors
       if (
@@ -272,8 +355,337 @@ export const getServiceProductByHandle = cache(async (
 
     return transformProduct(data.product);
   } catch (error) {
+    // Re-throw if it's already a formatted error
+    if (error instanceof Error && error.message.includes("Shopify API")) {
+      throw error;
+    }
+    
+    // Handle network errors that weren't caught above
+    if (error instanceof Error && error.message.includes("fetch")) {
+      console.error(`Network error fetching product ${handle} from Shopify:`, error);
+      throw new Error(
+        `Failed to fetch product ${handle} from Shopify: Network error. ` +
+          "Please check your SHOPIFY_STOREFRONT_API_URL and network connection."
+      );
+    }
+    
     console.error(`Error fetching product ${handle} from Shopify:`, error);
-    throw new Error(`Failed to fetch product ${handle} from Shopify`);
+    throw new Error(
+      `Failed to fetch product ${handle} from Shopify: ${error instanceof Error ? error.message : "Unknown error"}`
+    );
   }
 });
+
+// ============================================================================
+// Cart Management Mutations
+// ============================================================================
+
+const CART_CREATE_MUTATION = `
+  mutation CartCreate($input: CartInput!) {
+    cartCreate(input: $input) {
+      cart {
+        id
+        checkoutUrl
+        totalQuantity
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
+        lines(first: 100) {
+          edges {
+            node {
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  product {
+                    title
+                    handle
+                    featuredImage {
+                      url
+                      altText
+                    }
+                  }
+                  price {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+const CART_LINES_ADD_MUTATION = `
+  mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+    cartLinesAdd(cartId: $cartId, lines: $lines) {
+      cart {
+        id
+        checkoutUrl
+        totalQuantity
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
+        lines(first: 100) {
+          edges {
+            node {
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  product {
+                    title
+                    handle
+                    featuredImage {
+                      url
+                      altText
+                    }
+                  }
+                  price {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+const CART_GET_QUERY = `
+  query GetCart($id: ID!) {
+    cart(id: $id) {
+      id
+      checkoutUrl
+      totalQuantity
+      cost {
+        totalAmount {
+          amount
+          currencyCode
+        }
+      }
+      lines(first: 100) {
+        edges {
+          node {
+            id
+            quantity
+            merchandise {
+              ... on ProductVariant {
+                id
+                title
+                product {
+                  title
+                  handle
+                  featuredImage {
+                    url
+                    altText
+                  }
+                }
+                price {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const CART_LINES_REMOVE_MUTATION = `
+  mutation CartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+    cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart {
+        id
+        checkoutUrl
+        totalQuantity
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
+        lines(first: 100) {
+          edges {
+            node {
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  product {
+                    title
+                    handle
+                    featuredImage {
+                      url
+                      altText
+                    }
+                  }
+                  price {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+/**
+ * Create a new cart
+ * Note: This should be called from an API route, not directly from server components
+ */
+export async function createCart(): Promise<Cart> {
+  const client = getShopifyClient();
+  const response = await client.request(CART_CREATE_MUTATION, {
+    variables: { input: {} },
+  });
+
+  if (response.errors) {
+    throw new Error(`Shopify API error: ${JSON.stringify(response.errors)}`);
+  }
+
+  const data = response.data as {
+    cartCreate: {
+      cart: Cart;
+      userErrors: Array<{ field: string[]; message: string }>;
+    };
+  };
+
+  if (data.cartCreate.userErrors.length > 0) {
+    throw new Error(
+      `Cart creation errors: ${data.cartCreate.userErrors.map((e) => e.message).join(", ")}`
+    );
+  }
+
+  return data.cartCreate.cart;
+}
+
+/**
+ * Get a cart by ID
+ */
+export async function getCart(cartId: string): Promise<Cart | null> {
+  const client = getShopifyClient();
+  const response = await client.request(CART_GET_QUERY, {
+    variables: { id: cartId },
+  });
+
+  if (response.errors) {
+    throw new Error(`Shopify API error: ${JSON.stringify(response.errors)}`);
+  }
+
+  const data = response.data as { cart: Cart | null };
+  return data.cart;
+}
+
+/**
+ * Add items to a cart
+ */
+export async function addToCart(
+  cartId: string,
+  variantId: string,
+  quantity: number = 1
+): Promise<Cart> {
+  const client = getShopifyClient();
+  const response = await client.request(CART_LINES_ADD_MUTATION, {
+    variables: {
+      cartId,
+      lines: [
+        {
+          merchandiseId: variantId,
+          quantity,
+        },
+      ],
+    },
+  });
+
+  if (response.errors) {
+    throw new Error(`Shopify API error: ${JSON.stringify(response.errors)}`);
+  }
+
+  const data = response.data as {
+    cartLinesAdd: {
+      cart: Cart;
+      userErrors: Array<{ field: string[]; message: string }>;
+    };
+  };
+
+  if (data.cartLinesAdd.userErrors.length > 0) {
+    throw new Error(
+      `Add to cart errors: ${data.cartLinesAdd.userErrors.map((e) => e.message).join(", ")}`
+    );
+  }
+
+  return data.cartLinesAdd.cart;
+}
+
+/**
+ * Remove items from a cart
+ */
+export async function removeFromCart(
+  cartId: string,
+  lineIds: string[]
+): Promise<Cart> {
+  const client = getShopifyClient();
+  const response = await client.request(CART_LINES_REMOVE_MUTATION, {
+    variables: {
+      cartId,
+      lineIds,
+    },
+  });
+
+  if (response.errors) {
+    throw new Error(`Shopify API error: ${JSON.stringify(response.errors)}`);
+  }
+
+  const data = response.data as {
+    cartLinesRemove: {
+      cart: Cart;
+      userErrors: Array<{ field: string[]; message: string }>;
+    };
+  };
+
+  if (data.cartLinesRemove.userErrors.length > 0) {
+    throw new Error(
+      `Remove from cart errors: ${data.cartLinesRemove.userErrors.map((e) => e.message).join(", ")}`
+    );
+  }
+
+  return data.cartLinesRemove.cart;
+}
 

@@ -3,6 +3,7 @@
 
 import React from "react";
 import { ThemeProvider } from "next-themes";
+import { CartProvider } from "@/lib/cart-context";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ export function Providers({ children }: ProvidersProps) {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <CartProvider>{children}</CartProvider>
     </ThemeProvider>
   );
 }

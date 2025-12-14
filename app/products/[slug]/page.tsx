@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getServiceProductByHandle } from "@/lib/shopify";
 import { getServiceContent, urlForImage } from "@/lib/sanity";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { PortableText } from "@portabletext/react";
 import { portableTextComponents } from "@/components/PortableTextComponents";
+import { AddToCartButton } from "@/components/AddToCartButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -121,13 +121,13 @@ export default async function ProductDetailPage({ params }: Props) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     {product.variants.map((variant) => (
                       <div
                         key={variant.id}
                         className="flex items-center justify-between p-3 rounded-lg border"
                       >
-                        <div>
+                        <div className="flex-1">
                           <p className="font-medium">{variant.title}</p>
                           <p className="text-sm text-muted-foreground">
                             {new Intl.NumberFormat("en-US", {
@@ -136,15 +136,24 @@ export default async function ProductDetailPage({ params }: Props) {
                             }).format(parseFloat(variant.price.amount))}
                           </p>
                         </div>
-                        <span
-                          className={`text-xs px-2 py-1 rounded ${
-                            variant.availableForSale
-                              ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                              : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
-                          }`}
-                        >
-                          {variant.availableForSale ? "Available" : "Unavailable"}
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={`text-xs px-2 py-1 rounded ${
+                              variant.availableForSale
+                                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                                : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+                            }`}
+                          >
+                            {variant.availableForSale ? "Available" : "Unavailable"}
+                          </span>
+                          {variant.availableForSale && (
+                            <AddToCartButton
+                              variantId={variant.id}
+                              size="sm"
+                              disabled={!variant.availableForSale}
+                            />
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -152,9 +161,14 @@ export default async function ProductDetailPage({ params }: Props) {
               </Card>
             )}
 
-            <Button size="lg" className="w-full">
-              Add to Cart
-            </Button>
+            {/* Add to Cart for first available variant (if only one variant or quick add) */}
+            {product.variants.length > 0 && (
+              <AddToCartButton
+                variantId={product.variants[0].id}
+                disabled={!product.variants[0].availableForSale}
+                className="w-full"
+              />
+            )}
           </div>
         </div>
 
