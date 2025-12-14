@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { getAllServiceProducts } from "@/lib/shopify";
 import type { Product } from "@/lib/types";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/ProductCard";
 
 // @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
@@ -71,48 +62,7 @@ export default async function ProductsPage() {
         {products.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {products.map((product) => (
-              <Card key={product.id} className="flex flex-col">
-                {product.featuredImage && (
-                  <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
-                    {/* @ToPresent @rendering: next/image for automatic image optimization and lazy loading */}
-                    <Image
-                      src={product.featuredImage.url}
-                      alt={product.featuredImage.altText || product.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-                <CardHeader>
-                  <CardTitle>{product.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {product.description || "Premium cleaning product"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <p className="text-2xl font-bold">
-                    {new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: product.priceRange.minVariantPrice.currencyCode,
-                    }).format(
-                      parseFloat(product.priceRange.minVariantPrice.amount)
-                    )}
-                  </p>
-                  {product.variants.length > 1 && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {product.variants.length} variants available
-                    </p>
-                  )}
-                </CardContent>
-                <CardFooter>
-                  <Button asChild className="w-full">
-                    {/* @ToPresent @rendering: next/link for client-side navigation with automatic prefetching */}
-                    <Link href={`/products/${product.handle}`}>
-                      View Details
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}

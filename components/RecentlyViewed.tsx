@@ -2,18 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { getRecentlyViewed } from "@/lib/recently-viewed";
 import type { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { ProductCard } from "@/components/ProductCard";
 import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 
 /**
@@ -114,39 +106,11 @@ export function RecentlyViewed({ featuredProducts }: { featuredProducts: Product
       </div>
       <div className={containerClasses}>
         {recentlyViewed.map((product) => (
-          <Card key={product.id} className={`flex flex-col ${itemCount <= 2 ? "max-w-sm" : ""}`}>
-            {product.featuredImage && (
-              <div className="relative w-full h-48 overflow-hidden rounded-t-xl">
-                <Image
-                  src={product.featuredImage.url}
-                  alt={product.featuredImage.altText || product.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
-            <CardHeader>
-              <CardTitle>{product.title}</CardTitle>
-              <CardDescription className="line-clamp-2">
-                {product.description || "Premium cleaning product"}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-2xl font-bold">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: product.priceRange.minVariantPrice.currencyCode,
-                }).format(
-                  parseFloat(product.priceRange.minVariantPrice.amount)
-                )}
-              </p>
-            </CardContent>
-            <CardFooter>
-              <Button asChild className="w-full">
-                <Link href={`/products/${product.handle}`}>View Details</Link>
-              </Button>
-            </CardFooter>
-          </Card>
+          <ProductCard
+            key={product.id}
+            product={product}
+            className={itemCount <= 2 ? "max-w-sm" : ""}
+          />
         ))}
       </div>
       <div className="text-center mt-8">
