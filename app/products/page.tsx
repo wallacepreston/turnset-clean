@@ -62,6 +62,10 @@ export default async function ProductsPage() {
         {products.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {products.map((product) => (
+              /* @ToPresent @rendering: ProductCard is a Server Component, rendered as static HTML
+                 - HTML is pre-generated at build time or via ISR (revalidate: 60s)
+                 - Zero client-side JavaScript for rendering
+                 - Only Link component needs minimal hydration for client-side navigation */
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

@@ -44,6 +44,11 @@ export default async function Home() {
       </div>
 
       {/* Recently Viewed / Featured Products Section */}
+      {/* @ToPresent @rendering: RecentlyViewed is a Client Component (needs localStorage access)
+          - Server Component (Home) renders static HTML for hero/testimonials
+          - Client Component boundary: RecentlyViewed and its children (ProductCard) get hydrated
+          - ProductCard HTML is still server-rendered, but hydrated on client for interactivity
+          - This allows dynamic behavior (recently viewed from localStorage) while keeping most content static */}
       {featured.length > 0 && (
         <RecentlyViewed featuredProducts={featured} />
       )}
