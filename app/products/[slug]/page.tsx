@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getServiceProductByHandle } from "@/lib/shopify";
-import { getServiceContent, urlForImage } from "@/lib/sanity";
 import {
   Card,
   CardContent,
@@ -10,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { PortableText } from "@portabletext/react";
-import { portableTextComponents } from "@/components/PortableTextComponents";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { TrackProductView } from "@/components/TrackProductView";
 
@@ -63,11 +60,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
-  // @ToPresent @rendering: Parallel data fetching from multiple sources (Shopify + Sanity) using Promise.all()
-  const [product, serviceContent] = await Promise.all([
-    getServiceProductByHandle(slug),
-    getServiceContent(slug),
-  ]);
+  // @ToPresent @rendering: Fetch product data from Shopify
+  const product = await getServiceProductByHandle(slug);
 
   if (!product) {
     // @ToPresent @rendering: Next.js notFound() function for proper 404 handling
@@ -175,92 +169,6 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* What's Included Section */}
-        {serviceContent?.whatIsIncluded && (
-          <Card>
-            <CardHeader>
-              <CardTitle>What&apos;s Included</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="prose max-w-none">
-                <PortableText
-                  value={serviceContent.whatIsIncluded}
-                  components={portableTextComponents}
-                />
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Best For Section */}
-        {serviceContent?.bestFor && serviceContent.bestFor.length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Best For</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-2">
-                {serviceContent.bestFor.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Before/After Images */}
-        {serviceContent?.beforeAfterImages &&
-          serviceContent.beforeAfterImages.length > 0 && (
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Before & After</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {serviceContent.beforeAfterImages.map((image, index) => {
-                  const imageUrl = urlForImage(image)?.url();
-                  if (!imageUrl) return null;
-
-                  return (
-                    <div
-                      key={index}
-                      className="relative w-full h-64 rounded-lg overflow-hidden"
-                    >
-                      <Image
-                        src={imageUrl}
-                        alt={image.alt || `Before/After ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-        {/* FAQ Section */}
-        {serviceContent?.faqEntries && serviceContent.faqEntries.length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Frequently Asked Questions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {serviceContent.faqEntries.map((faq, index) => (
-                  <div key={index} className="space-y-2">
-                    <h3 className="font-semibold text-lg">{faq.question}</h3>
-                    {faq.answer && (
-                      <div className="prose prose-sm max-w-none text-muted-foreground">
-                        <PortableText
-                          value={faq.answer}
-                          components={portableTextComponents}
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
       </div>
     </div>
   );

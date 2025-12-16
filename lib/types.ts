@@ -88,24 +88,6 @@ export interface HomepageContent {
   }>;
 }
 
-export interface ServiceContent {
-  serviceHandle?: string;
-  whatIsIncluded?: any; // Rich text/portable text
-  bestFor?: string[];
-  beforeAfterImages?: Array<{
-    _type: string;
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    alt?: string;
-  }>;
-  faqEntries?: Array<{
-    question?: string;
-    answer?: any; // Rich text/portable text
-  }>;
-}
-
 export interface PageContent {
   title?: string;
   slug?: {
