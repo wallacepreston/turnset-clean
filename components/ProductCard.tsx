@@ -31,6 +31,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
     <Link
       href={`/products/${product.handle}`}
       className={`block ${className || ""}`}
+      prefetch={false}
     >
       <Card className="flex flex-col h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">
         {product.featuredImage && (
