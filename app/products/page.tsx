@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getAllServiceProducts } from "@/lib/shopify";
 import type { Product } from "@/lib/types";
 import { ProductCard } from "@/components/ProductCard";
