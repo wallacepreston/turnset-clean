@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "Shop premium cleaning products, tools, and merch.",
 };
 
-// @ToPresent @caching: ISR with 60-second revalidation for product listings (pricing changes more frequently)
-export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+// @ToPresent @caching: ISR with 1-minute revalidation for product listings (pricing changes more frequently)
+export const revalidate = 60; // Revalidate every 1 minute (ISR)
 
 // @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function ProductsPage() {
@@ -62,7 +62,7 @@ export default async function ProductsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {products.map((product) => (
               /* @ToPresent @rendering: ProductCard is a Server Component, rendered as static HTML
-                 - HTML is pre-generated at build time or via ISR (revalidate: 60s)
+                 - HTML is pre-generated at build time or via ISR (revalidate: 1 minute)
                  - Zero client-side JavaScript for rendering
                  - Only Link component needs minimal hydration for client-side navigation */
               <ProductCard key={product.id} product={product} />

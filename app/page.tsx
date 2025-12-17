@@ -1,9 +1,7 @@
 import { getHomepageContent } from "@/lib/sanity";
 import { getAllServiceProducts } from "@/lib/shopify";
 import { Button } from "@/components/ui/button";
-import { PortableText } from "@portabletext/react";
 import Image from "next/image";
-import Link from "next/link";
 import { urlForImage } from "@/lib/sanity";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
 
