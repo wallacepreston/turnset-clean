@@ -70,7 +70,7 @@ A high-performance Next.js storefront for TurnSet Clean, integrating Shopify pro
 - **[Sanity CMS](https://www.sanity.io/)** - Content management
 - **[@sanity/client](https://www.sanity.io/docs/js-client)** - Sanity client library
 - **[next-sanity](https://github.com/sanity-io/next-sanity)** - Sanity integration for Next.js
-- **[@portabletext/react](https://github.com/portabletext/react-portabletext)** - Portable Text rendering
+- **[@portabletext/react](https://github.com/portabletext/react-portabletext)** - Portable Text rendering (Sanity). For rendering the Sanity-formatted content in the static pages.
 
 ### UI Components
 
