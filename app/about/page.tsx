@@ -4,7 +4,7 @@ import { PortableText } from "@portabletext/react";
 import { portableTextComponents } from "@/components/PortableTextComponents";
 
 // @ToPresent @caching: ISR with 10-minute revalidation for static marketing content
-export const revalidate = 600; // Revalidate every 10 minutes (ISR)
+export const revalidate = 300; // Revalidate every 5 minutes (ISR)
 
 // @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {

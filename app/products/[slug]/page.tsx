@@ -16,8 +16,8 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
-// @ToPresent @caching: ISR with 5-minute revalidation for product detail pages
-export const revalidate = 300; // Revalidate every 5 minutes (ISR)
+// @ToPresent @caching: ISR with 1-minute revalidation for product detail pages
+export const revalidate = 60; // Revalidate every 1 minute (ISR)
 
 /**
  * @ToPresent @caching: Pre-generates all product pages at build time for static generation
