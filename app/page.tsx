@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
+import { ABTestExample } from "@/components/ABTestExample";
 
 // @ToPresent @caching: ISR with 5-minute revalidation for homepage (balances freshness with performance)
 export const revalidate = 300; // Revalidate every 5 minutes (ISR)
@@ -32,13 +33,10 @@ export default async function Home() {
           {homepageContent?.heroSubtitle ||
             "Premium cleaning products and tools—trusted by homeowners, hosts, landlords, and property managers."}
         </p>
-        {homepageContent?.heroCtaText && (
-          <Button size="lg" asChild>
-            <a href={homepageContent.heroCtaLink || "/products"}>
-              {homepageContent.heroCtaText}
-            </a>
-          </Button>
-        )}
+        {/* A/B Test Example: Hero CTA Button */}
+        <div className="flex justify-center">
+          <ABTestExample />
+        </div>
       </div>
 
       {/* Recently Viewed / Featured Products Section */}
