@@ -1,3 +1,4 @@
+// @ToPresent @rendering: Client component - uses useEffect to load recently viewed products from localStorage and API
 "use client";
 
 import { useEffect, useState } from "react";
