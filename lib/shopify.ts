@@ -175,13 +175,13 @@ function transformProduct(node: ShopifyProductNode): Product {
  * Uses Next.js cache directives:
  * - 'use cache' directive enables component-level caching
  * - cacheLife('minutes') provides ISR with 1-minute revalidation (products/pricing change more frequently)
- * - cacheTag('shopify-products') allows on-demand revalidation via webhooks
+ * - cacheTag('shopify-products') allows on-demand invalidation
  * - React cache() still deduplicates calls within a single render
  */
 export const getAllServiceProducts = async (): Promise<Product[]> => {
   'use cache';
   cacheLife('minutes'); // ISR: revalidate every minute (products/pricing change more frequently)
-  cacheTag('shopify-products'); // Tag for on-demand revalidation via webhooks
+  cacheTag('shopify-products'); // Tag for on-demand invalidation
   try {
     const client = getShopifyClient();
     const response = await client.request(ALL_PRODUCTS_QUERY, {
@@ -269,7 +269,7 @@ export const getAllServiceProducts = async (): Promise<Product[]> => {
  * Uses Next.js cache directives:
  * - 'use cache' directive enables component-level caching
  * - cacheLife('minutes') provides ISR with 1-minute revalidation (product details change more frequently)
- * - cacheTag('shopify-product', handle) allows targeted on-demand revalidation per product
+ * - cacheTag('shopify-product', handle) allows targeted on-demand invalidation per product
  * - React cache() still deduplicates calls within a single render
  */
 export const getServiceProductByHandle = cache(async (
@@ -277,7 +277,7 @@ export const getServiceProductByHandle = cache(async (
 ): Promise<Product | null> => {
   'use cache';
   cacheLife('minutes'); // ISR: revalidate every minute (product details change more frequently)
-  cacheTag('shopify-product', `shopify-product-${handle}`); // Tag for on-demand revalidation
+  cacheTag('shopify-product', `shopify-product-${handle}`); // Tag for on-demand invalidation
   try {
     const client = getShopifyClient();
     const response = await client.request(PRODUCT_BY_HANDLE_QUERY, {

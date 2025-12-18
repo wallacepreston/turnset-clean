@@ -44,7 +44,7 @@ export function urlForImage(source: any) {
 export const getHomepageContent = cache(async (): Promise<HomepageContent | null> => {
   'use cache';
   cacheLife('hours'); // ISR: revalidate every hour (content changes infrequently)
-  cacheTag('sanity-homepage'); // Tag for on-demand revalidation via webhooks
+  cacheTag('sanity-homepage'); // Tag for on-demand invalidation
 
   try {
     const client = getSanityClient();
@@ -92,7 +92,7 @@ export const getPageBySlug = cache(async (
 ): Promise<PageContent | null> => {
   'use cache';
   cacheLife('hours'); // ISR: revalidate every hour (CMS content changes infrequently)
-  cacheTag('sanity-page', `sanity-page-${slug}`); // Tag for on-demand revalidation
+  cacheTag('sanity-page', `sanity-page-${slug}`); // Tag for on-demand invalidation (i.e. via webhooks)
 
   try {
     const client = getSanityClient();
