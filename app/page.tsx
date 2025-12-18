@@ -4,9 +4,24 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
+import { Suspense } from "react";
+import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 
-// @ToPresent @caching: ISR with 5-minute revalidation for homepage (balances freshness with performance)
-export const revalidate = 300; // Revalidate every 5 minutes (ISR)
+const LoadingSkeleton = () => {
+  return (
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <div className="h-9 bg-muted/20 rounded animate-pulse w-64 mx-auto mb-4" />
+            <div className="h-5 bg-muted/20 rounded animate-pulse w-96 mx-auto" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+          </div>
+        </div>
+  )
+}
 
 // @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function Home() {
@@ -47,58 +62,10 @@ export default async function Home() {
           - Client Component boundary: RecentlyViewed and its children (ProductCard) get hydrated
           - ProductCard HTML is still server-rendered, but hydrated on client for interactivity
           - This allows dynamic behavior (recently viewed from localStorage) while keeping most content static */}
-      {featured.length > 0 && (
-        <RecentlyViewed featuredProducts={featured} />
-      )}
-
-      {/* Testimonials Section */}
-      {homepageContent?.testimonials &&
-        homepageContent.testimonials.length > 0 && (
-          <div>
-            <h2 className="text-3xl font-bold text-center mb-12">
-              What Our Clients Say
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {homepageContent.testimonials.map((testimonial, index) => {
-                const imageUrl = testimonial.avatar
-                  ? urlForImage(testimonial.avatar)?.url()
-                  : null;
-
-                return (
-                  <div
-                    key={index}
-                    className="p-6 rounded-lg border bg-card space-y-4"
-                  >
-                    {testimonial.quote && (
-                      <p className="text-muted-foreground italic">
-                        &ldquo;{testimonial.quote}&rdquo;
-                      </p>
-                    )}
-                    <div className="flex items-center gap-4">
-                      {imageUrl && (
-                        <Image
-                          src={imageUrl}
-                          alt={testimonial.name || "Testimonial"}
-                          width={48}
-                          height={48}
-                          className="rounded-full"
-                        />
-                      )}
-                      <div>
-                        <p className="font-semibold">{testimonial.name}</p>
-                        {testimonial.role && (
-                          <p className="text-sm text-muted-foreground">
-                            {testimonial.role}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <Suspense fallback={<LoadingSkeleton/>}>
+          <RecentlyViewed featuredProducts={featured} />
+        </Suspense>
+      
     </div>
   );
 }

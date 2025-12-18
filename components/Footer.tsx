@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { getCacheTimestamp } from "@/lib/cache";
 
-export function Footer() {
+export async function Footer() {
+  const lastUpdatedYear = await getCacheTimestamp();
   return (
     <footer className="border-t bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -48,7 +50,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} TurnSet Clean. All rights reserved.</p>
+          <p>&copy; {lastUpdatedYear} TurnSet Clean. All rights reserved.</p>
         </div>
       </div>
     </footer>

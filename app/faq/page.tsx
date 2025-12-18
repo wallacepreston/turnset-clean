@@ -9,9 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// @ToPresent @caching: ISR with 10-minute revalidation for static marketing content
-export const revalidate = 300; // Revalidate every 5 minutes (ISR)
-
 // @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "FAQ | TurnSet Clean",

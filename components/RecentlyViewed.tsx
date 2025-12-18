@@ -1,90 +1,50 @@
-// @ToPresent @rendering: Client component - uses useEffect to load recently viewed products from localStorage and API
-"use client";
+// @ToPresent @rendering: Server component - fetches recently viewed products from cookies and Shopify
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getRecentlyViewed } from "@/lib/recently-viewed";
+import { getServiceProductByHandle } from "@/lib/shopify";
 import type { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
-import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 
 /**
- * Client component that displays recently viewed products
+ * Server component that displays recently viewed products
  * Falls back to featured products if no recently viewed items exist
  */
-export function RecentlyViewed({ featuredProducts }: { featuredProducts: Product[] }) {
-  const [recentlyViewed, setRecentlyViewed] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadRecentlyViewed() {
-      try {
-        setIsLoading(true);
-        const handles = getRecentlyViewed();
-
-        if (handles.length === 0) {
-          // No recently viewed items, use featured products
-          setRecentlyViewed(featuredProducts.slice(0, 3));
-          setIsLoading(false);
-          return;
+export async function RecentlyViewed({ featuredProducts }: { featuredProducts: Product[] }) {
+  // Get recently viewed handles from cookies
+  const recentlyViewedHandles = await getRecentlyViewed();
+  
+  // Fetch products for recently viewed handles
+  let recentlyViewedProducts: Product[] = [];
+  if (recentlyViewedHandles.length > 0) {
+    const products = await Promise.all(
+      recentlyViewedHandles.map(async (handle) => {
+        try {
+          return await getServiceProductByHandle(handle);
+        } catch (error) {
+          console.error(`Error fetching product ${handle}:`, error);
+          return null;
         }
-
-        // Fetch products for recently viewed handles via API
-        const response = await fetch("/api/products/by-handles", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(handles),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch recently viewed products");
-        }
-
-        const data = await response.json();
-        const validProducts = (data.products as Product[]).slice(0, 3);
-
-        if (validProducts.length > 0) {
-          setRecentlyViewed(validProducts);
-        } else {
-          // Fallback to featured if no valid recently viewed products
-          setRecentlyViewed(featuredProducts.slice(0, 3));
-        }
-      } catch (error) {
-        console.error("Error loading recently viewed:", error);
-        // Fallback to featured products on error
-        setRecentlyViewed(featuredProducts.slice(0, 3));
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    loadRecentlyViewed();
-  }, [featuredProducts]);
-
-  // Show skeletons while loading
-  if (isLoading) {
-    return (
-      <div className="mb-16">
-        <div className="text-center mb-12">
-          <div className="h-9 bg-muted/20 rounded animate-pulse w-64 mx-auto mb-4" />
-          <div className="h-5 bg-muted/20 rounded animate-pulse w-96 mx-auto" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProductCardSkeleton />
-          <ProductCardSkeleton />
-          <ProductCardSkeleton />
-        </div>
-      </div>
+      })
+    );
+    // Filter out nulls (products that don't exist or failed to fetch)
+    recentlyViewedProducts = products.filter(
+      (p): p is Product => p !== null
     );
   }
 
+  // Use recently viewed products if available, otherwise fall back to featured
+  const productsToShow = recentlyViewedProducts.length > 0 
+    ? recentlyViewedProducts 
+    : featuredProducts;
+
   // Don't render if no products
-  if (recentlyViewed.length === 0) {
+  if (productsToShow.length === 0) {
     return null;
   }
 
-  const hasRecentlyViewed = getRecentlyViewed().length > 0;
+  const hasRecentlyViewed = recentlyViewedProducts.length > 0;
   const title = hasRecentlyViewed
     ? "Continue Where You Left Off"
     : "Featured Products";
@@ -93,7 +53,7 @@ export function RecentlyViewed({ featuredProducts }: { featuredProducts: Product
     : "Shop best-sellers in cleaners, tools, and merch";
 
   // Center items when there are 1-2 products
-  const itemCount = recentlyViewed.length;
+  const itemCount = productsToShow.length;
   const containerClasses =
     itemCount <= 2
       ? "flex flex-wrap justify-center gap-6"
@@ -106,7 +66,7 @@ export function RecentlyViewed({ featuredProducts }: { featuredProducts: Product
         <p className="text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>
       </div>
       <div className={containerClasses}>
-        {recentlyViewed.map((product) => (
+        {productsToShow.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
@@ -116,7 +76,7 @@ export function RecentlyViewed({ featuredProducts }: { featuredProducts: Product
       </div>
       <div className="text-center mt-8">
         <Button variant="outline" asChild>
-          <Link href="/products">View All Products</Link>
+          <Link href="/products">View Our Products</Link>
         </Button>
       </div>
     </div>

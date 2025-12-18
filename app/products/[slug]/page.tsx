@@ -11,13 +11,11 @@ import {
 } from "@/components/ui/card";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { TrackProductView } from "@/components/TrackProductView";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
-
-// @ToPresent @caching: ISR with 1-minute revalidation for product detail pages
-export const revalidate = 60; // Revalidate every 1 minute (ISR)
 
 /**
  * @ToPresent @caching: Pre-generates all product pages at build time for static generation
@@ -36,7 +34,7 @@ export async function generateStaticParams() {
   } catch (error) {
     console.error("Error generating static params for products:", error);
     // Return empty array to allow on-demand generation
-    return [];
+    return [{ slug: "_placeholder" }];
   }
 }
 
@@ -76,7 +74,9 @@ export default async function ProductDetailPage({ params }: Props) {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Track product view for recently viewed functionality */}
-      <TrackProductView handle={slug} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TrackProductView handle={slug} />
+      </Suspense>
       <div className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Image */}

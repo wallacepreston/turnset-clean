@@ -1,4 +1,5 @@
-"use client";
+"use server";
+import { cookies } from 'next/headers'
 
 /**
  * localStorage utility for managing recently viewed products
@@ -17,38 +18,25 @@ const MAX_RECENT_ITEMS = 3; // Store up to 3 recently viewed items
 /**
  * Get recently viewed product handles from localStorage
  */
-export function getRecentlyViewed(): string[] {
-  if (typeof window === "undefined") return [];
-
-  try {
-    const stored = localStorage.getItem(RECENTLY_VIEWED_KEY);
-    if (!stored) {
+export async function getRecentlyViewed(): Promise<string[]> {
+    const cookieStore = await cookies()
+    const recentlyViewed = cookieStore.get(RECENTLY_VIEWED_KEY);
+    if (!recentlyViewed) {
       return [];
     }
-
-    const parsed = JSON.parse(stored);
-    if (Array.isArray(parsed)) {
-      return parsed.filter((item) => typeof item === "string");
-    }
-
-    return [];
-  } catch (error) {
-    console.error("Error reading recently viewed from localStorage:", error);
-    // Clear corrupted data
-    localStorage.removeItem(RECENTLY_VIEWED_KEY);
-    return [];
-  }
+    const recentlyViewedItems = JSON.parse(recentlyViewed.value);
+    console.log("recentlyViewedItems", recentlyViewedItems);
+    return recentlyViewedItems;
 }
 
 /**
  * Add a product handle to recently viewed
  * Removes duplicates and keeps only the most recent items
  */
-export function addToRecentlyViewed(handle: string): void {
-  if (typeof window === "undefined") return;
 
+export async function addToRecentlyViewed(handle: string): Promise<void> {
   try {
-    const current = getRecentlyViewed();
+    const current = await getRecentlyViewed();
     
     // Remove the handle if it already exists (to move it to the front)
     const filtered = current.filter((h) => h !== handle);
@@ -57,21 +45,9 @@ export function addToRecentlyViewed(handle: string): void {
     const updated = [handle, ...filtered].slice(0, MAX_RECENT_ITEMS);
     
     // Save to localStorage
-    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(updated));
+    const cookieStore = await cookies()
+    cookieStore.set(RECENTLY_VIEWED_KEY, JSON.stringify(updated));
   } catch (error) {
     console.error("Error updating recently viewed in localStorage:", error);
-  }
-}
-
-/**
- * Clear recently viewed products
- */
-export function clearRecentlyViewed(): void {
-  if (typeof window === "undefined") return;
-
-  try {
-    localStorage.removeItem(RECENTLY_VIEWED_KEY);
-  } catch (error) {
-    console.error("Error clearing recently viewed from localStorage:", error);
   }
 }

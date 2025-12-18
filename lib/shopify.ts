@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { cacheLife, cacheTag } from "next/cache";
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { getEnv } from "./env";
 import type {
@@ -8,7 +9,6 @@ import type {
   ShopifyProductsResponse,
   ShopifyProductResponse,
   Cart,
-  CartLine,
 } from "./types";
 
 // Initialize Shopify client
@@ -165,7 +165,7 @@ function transformProduct(node: ShopifyProductNode): Product {
 }
 
 /**
- * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
+ * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch all service products from Shopify
  * 
  * Note: The Storefront API only returns products that are:
@@ -173,13 +173,20 @@ function transformProduct(node: ShopifyProductNode): Product {
  * - Available in the sales channel associated with the Storefront API token
  * - Have at least one variant available for sale
  * 
- * How it integrates:
- * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
- * - Next.js revalidate controls when the page regenerates, creating a new render context
- * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
+ * How it integrates with cacheComponents:
+ * - 'use cache' directive enables component-level caching
+ * - cacheLife('minutes') provides ISR with 1-minute revalidation (products/pricing change more frequently)
+ * - cacheTag('shopify-products') allows on-demand revalidation via webhooks
+ * - React cache() still deduplicates calls within a single render
  */
-export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
+export const getAllServiceProducts = async (): Promise<Product[]> => {
+  'use cache';
+  cacheLife('minutes'); // ISR: revalidate every minute (products/pricing change more frequently)
+  cacheTag('shopify-products'); // Tag for on-demand revalidation via webhooks
   try {
+    // @TODO: remove when moving to production. This is here to simulate delay in fetching products,
+    // to show the loading state demonstrating dynamic data fetching.
+    await Promise.resolve(new Promise((resolve) => setTimeout(resolve, 1000)));
     const client = getShopifyClient();
     const response = await client.request(ALL_PRODUCTS_QUERY, {
       variables: {},
@@ -236,31 +243,7 @@ export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
       return [];
     }
 
-    // Log raw response for debugging (only in development)
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[Shopify] Raw API response: ${data.products.edges.length} product(s) returned`);
-      data.products.edges.forEach((edge) => {
-        const node = edge.node;
-        const availableVariants = node.variants.edges.filter(
-          (v) => v.node.availableForSale
-        ).length;
-        console.log(`  - ${node.title} (${node.handle}): ${node.variants.edges.length} variant(s), ${availableVariants} available for sale`);
-      });
-    }
-
     const products = data.products.edges.map((edge) => transformProduct(edge.node));
-    
-    // Log transformed products (only in development)
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[Shopify] Transformed ${products.length} product(s):`, 
-        products.map(p => ({ 
-          title: p.title, 
-          handle: p.handle,
-          variants: p.variants.length,
-          availableVariants: p.variants.filter(v => v.availableForSale).length
-        }))
-      );
-    }
 
     return products;
   } catch (error) {
@@ -283,20 +266,23 @@ export const getAllServiceProducts = cache(async (): Promise<Product[]> => {
       `Failed to fetch products from Shopify: ${error instanceof Error ? error.message : "Unknown error"}`
     );
   }
-});
-
+}
 /**
- * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
+ * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch a single service product by handle from Shopify
  * 
- * How it integrates:
- * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
- * - Next.js revalidate controls when the page regenerates, creating a new render context
- * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
+ * How it integrates with cacheComponents:
+ * - 'use cache' directive enables component-level caching
+ * - cacheLife('minutes') provides ISR with 1-minute revalidation (product details change more frequently)
+ * - cacheTag('shopify-product', handle) allows targeted on-demand revalidation per product
+ * - React cache() still deduplicates calls within a single render
  */
 export const getServiceProductByHandle = cache(async (
   handle: string
 ): Promise<Product | null> => {
+  'use cache';
+  cacheLife('minutes'); // ISR: revalidate every minute (product details change more frequently)
+  cacheTag('shopify-product', `shopify-product-${handle}`); // Tag for on-demand revalidation
   try {
     const client = getShopifyClient();
     const response = await client.request(PRODUCT_BY_HANDLE_QUERY, {

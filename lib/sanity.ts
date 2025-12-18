@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { cacheLife, cacheTag } from "next/cache";
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { getSanityEnv } from "./env";
@@ -18,8 +19,7 @@ function getSanityClient() {
     apiVersion,
     // @ToPresent @caching: Disabled Sanity CDN to rely solely on Next.js caching (single caching layer)
     // Disable Sanity CDN to rely solely on Next.js caching (ISR)
-    // This gives us full control over caching via revalidate and
-    // demonstrates Next.js caching primitives for the presentation
+    // Caching is now handled by cacheComponents with cacheLife() and cacheTag() in the data fetching functions
     useCdn: false,
     token: apiToken, // for draft content
   });
@@ -34,15 +34,20 @@ export function urlForImage(source: any) {
 }
 
 /**
- * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
+ * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch homepage content from Sanity
  * 
- * How it integrates:
- * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
- * - Next.js revalidate controls when the page regenerates, creating a new render context
- * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
+ * How it integrates with cacheComponents:
+ * - 'use cache' directive enables component-level caching
+ * - cacheLife('hours') provides ISR with 1-hour revalidation (content changes infrequently)
+ * - cacheTag('sanity-homepage') allows on-demand invalidation via webhooks
+ * - React cache() still deduplicates calls within a single render
  */
 export const getHomepageContent = cache(async (): Promise<HomepageContent | null> => {
+  'use cache';
+  cacheLife('hours'); // ISR: revalidate every hour (content changes infrequently)
+  cacheTag('sanity-homepage'); // Tag for on-demand revalidation via webhooks
+
   try {
     const client = getSanityClient();
     const query = `*[_type == "homepage"][0] {
@@ -61,23 +66,37 @@ export const getHomepageContent = cache(async (): Promise<HomepageContent | null
     const content = await client.fetch<HomepageContent>(query);
     return content || null;
   } catch (error) {
+    // Silently handle prerendering errors - they're expected during static generation
+    // and will be retried on the next request
+    if (
+      error instanceof Error &&
+      (error.message.includes("prerender") ||
+        error.message.includes("HANGING_PROMISE_REJECTION"))
+    ) {
+      return null;
+    }
     console.error("Error fetching homepage content from Sanity:", error);
     return null;
   }
 });
 
 /**
- * @ToPresent @caching: React cache() for request deduplication + Next.js revalidate for time-based invalidation
+ * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch page content by slug
  * 
- * How it integrates:
- * - React cache() deduplicates calls within a single render (if called multiple times, only one API request)
- * - Next.js revalidate controls when the page regenerates, creating a new render context
- * - Together: cache() prevents duplicate requests per render, revalidate controls freshness
+ * How it integrates with cacheComponents:
+ * - 'use cache' directive enables component-level caching
+ * - cacheLife('hours') provides ISR with 1-hour revalidation (CMS content changes infrequently)
+ * - cacheTag('sanity-page', slug) allows targeted on-demand invalidation per page
+ * - React cache() still deduplicates calls within a single render
  */
 export const getPageBySlug = cache(async (
   slug: string
 ): Promise<PageContent | null> => {
+  'use cache';
+  cacheLife('hours'); // ISR: revalidate every hour (CMS content changes infrequently)
+  cacheTag('sanity-page', `sanity-page-${slug}`); // Tag for on-demand revalidation
+
   try {
     const client = getSanityClient();
     const query = `*[_type == "simplePage" && slug.current == $slug][0] {
@@ -89,6 +108,15 @@ export const getPageBySlug = cache(async (
     const content = await client.fetch<PageContent>(query, { slug });
     return content || null;
   } catch (error) {
+    // Silently handle prerendering errors - they're expected during static generation
+    // and will be retried on the next request
+    if (
+      error instanceof Error &&
+      (error.message.includes("prerender") ||
+        error.message.includes("HANGING_PROMISE_REJECTION"))
+    ) {
+      return null;
+    }
     console.error(`Error fetching page ${slug} from Sanity:`, error);
     return null;
   }

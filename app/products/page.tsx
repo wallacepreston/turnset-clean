@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   description: "Shop premium cleaning products, tools, and merch.",
 };
 
-// @ToPresent @caching: ISR with 1-minute revalidation for product listings (pricing changes more frequently)
-export const revalidate = 60; // Revalidate every 1 minute (ISR)
-
 // @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function ProductsPage() {
   let products: Product[] = [];

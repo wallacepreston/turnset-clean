@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { z } from "zod";
 import {
   createCart,
@@ -6,6 +7,8 @@ import {
   addToCart,
   removeFromCart,
 } from "@/lib/shopify";
+
+const CART_ID_KEY = "shopify_cart_id";
 
 const addToCartSchema = z.object({
   cartId: z.string(),
@@ -28,6 +31,14 @@ export async function POST(request: NextRequest) {
 
     if (action === "create") {
       const cart = await createCart();
+      // Set cookie in route handler (this is allowed)
+      const cookieStore = await cookies();
+      cookieStore.set(CART_ID_KEY, cart.id, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
       return NextResponse.json({ cart }, { status: 200 });
     }
 
@@ -38,6 +49,14 @@ export async function POST(request: NextRequest) {
         validated.variantId,
         validated.quantity
       );
+      // Ensure cookie is set (in case it was missing)
+      const cookieStore = await cookies();
+      cookieStore.set(CART_ID_KEY, cart.id, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
       return NextResponse.json({ cart }, { status: 200 });
     }
 
