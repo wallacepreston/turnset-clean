@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -25,9 +26,13 @@ export default function RootLayout({
     <html lang="en" className={geist.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-background text-foreground">
         <Providers>
-          <Header />
+          <Suspense fallback={<div className="h-16 border-b" />}>
+            <Header />
+          </Suspense>
           <main className="flex-1">{children}</main>
-          <Footer />
+          <Suspense fallback={<div className="border-t py-8" />}>
+            <Footer />
+          </Suspense>
         </Providers>
       </body>
     </html>
