@@ -8,7 +8,7 @@ A high-performance Next.js storefront for TurnSet Clean, integrating Shopify pro
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.0.9 (or higher) (required by Next.js 16)
 - pnpm (recommended) or npm/yarn
 
 ### Installation
@@ -54,7 +54,7 @@ A high-performance Next.js storefront for TurnSet Clean, integrating Shopify pro
 
 ### Core Framework
 
-- **[Next.js 15](https://nextjs.org/)** - React framework with App Router
+- **[Next.js 16](https://nextjs.org/)** - React framework with App Router
 - **[React 19](https://react.dev/)** - UI library
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
 
