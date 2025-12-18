@@ -19,12 +19,6 @@ interface ProductCardProps {
 /**
  * Reusable product card component
  * Entire card is clickable and navigates to product detail page
- * 
- * @ToPresent @rendering: Server Component - renders as static HTML when used in Server Components
- * - When used in app/products/page.tsx (Server Component with ISR): Rendered on server as static HTML
- * - When used in RecentlyViewed (Client Component): Rendered on server, then hydrated on client
- * - Hover effects are CSS-only (no JavaScript required)
- * - Link component handles client-side navigation without full page reload
  */
 export function ProductCard({ product, className }: ProductCardProps) {
   return (

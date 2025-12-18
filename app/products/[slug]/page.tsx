@@ -18,7 +18,6 @@ type Props = {
 };
 
 /**
- * @ToPresent @caching: Pre-generates all product pages at build time for static generation
  * Generate static params for all products at build time.
  * This enables static generation of product pages while still allowing
  * on-demand generation for new products via ISR.
@@ -34,11 +33,10 @@ export async function generateStaticParams() {
   } catch (error) {
     console.error("Error generating static params for products:", error);
     // Return empty array to allow on-demand generation
-    return [{ slug: "_placeholder" }];
+    return [];
   }
 }
 
-// @ToPresent @rendering: Next.js generateMetadata() for dynamic SEO metadata per product page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getServiceProductByHandle(slug);
@@ -55,14 +53,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
-  // @ToPresent @rendering: Fetch product data from Shopify
   const product = await getServiceProductByHandle(slug);
 
   if (!product) {
-    // @ToPresent @rendering: Next.js notFound() function for proper 404 handling
     notFound();
   }
 
@@ -82,7 +77,6 @@ export default async function ProductDetailPage({ params }: Props) {
           {/* Product Image */}
           {product.featuredImage && (
             <div className="relative w-full h-96 lg:h-[500px] rounded-lg overflow-hidden">
-              {/* @ToPresent @rendering: next/image for automatic image optimization, lazy loading, and responsive images */}
               <Image
                 src={product.featuredImage.url}
                 alt={product.featuredImage.altText || product.title}

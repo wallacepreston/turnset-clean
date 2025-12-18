@@ -1,4 +1,3 @@
-// @ToPresent @rendering: Client component - ThemeProvider needs client-side to manage theme state and localStorage
 "use client";
 
 import React from "react";

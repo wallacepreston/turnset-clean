@@ -165,7 +165,6 @@ function transformProduct(node: ShopifyProductNode): Product {
 }
 
 /**
- * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch all service products from Shopify
  * 
  * Note: The Storefront API only returns products that are:
@@ -173,7 +172,7 @@ function transformProduct(node: ShopifyProductNode): Product {
  * - Available in the sales channel associated with the Storefront API token
  * - Have at least one variant available for sale
  * 
- * How it integrates with cacheComponents:
+ * Uses Next.js cache directives:
  * - 'use cache' directive enables component-level caching
  * - cacheLife('minutes') provides ISR with 1-minute revalidation (products/pricing change more frequently)
  * - cacheTag('shopify-products') allows on-demand revalidation via webhooks
@@ -184,9 +183,6 @@ export const getAllServiceProducts = async (): Promise<Product[]> => {
   cacheLife('minutes'); // ISR: revalidate every minute (products/pricing change more frequently)
   cacheTag('shopify-products'); // Tag for on-demand revalidation via webhooks
   try {
-    // @TODO: remove when moving to production. This is here to simulate delay in fetching products,
-    // to show the loading state demonstrating dynamic data fetching.
-    await Promise.resolve(new Promise((resolve) => setTimeout(resolve, 1000)));
     const client = getShopifyClient();
     const response = await client.request(ALL_PRODUCTS_QUERY, {
       variables: {},
@@ -268,10 +264,9 @@ export const getAllServiceProducts = async (): Promise<Product[]> => {
   }
 }
 /**
- * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch a single service product by handle from Shopify
  * 
- * How it integrates with cacheComponents:
+ * Uses Next.js cache directives:
  * - 'use cache' directive enables component-level caching
  * - cacheLife('minutes') provides ISR with 1-minute revalidation (product details change more frequently)
  * - cacheTag('shopify-product', handle) allows targeted on-demand revalidation per product

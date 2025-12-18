@@ -17,9 +17,8 @@ function getSanityClient() {
     projectId,
     dataset,
     apiVersion,
-    // @ToPresent @caching: Disabled Sanity CDN to rely solely on Next.js caching (single caching layer)
     // Disable Sanity CDN to rely solely on Next.js caching (ISR)
-    // Caching is now handled by cacheComponents with cacheLife() and cacheTag() in the data fetching functions
+    // Caching is handled by cacheComponents with cacheLife() and cacheTag() in the data fetching functions
     useCdn: false,
     token: apiToken, // for draft content
   });
@@ -34,10 +33,9 @@ export function urlForImage(source: any) {
 }
 
 /**
- * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch homepage content from Sanity
  * 
- * How it integrates with cacheComponents:
+ * Uses Next.js cache directives:
  * - 'use cache' directive enables component-level caching
  * - cacheLife('hours') provides ISR with 1-hour revalidation (content changes infrequently)
  * - cacheTag('sanity-homepage') allows on-demand invalidation via webhooks
@@ -81,10 +79,9 @@ export const getHomepageContent = cache(async (): Promise<HomepageContent | null
 });
 
 /**
- * @ToPresent @caching: cacheComponents with cacheLife for ISR + cacheTag for on-demand revalidation
  * Fetch page content by slug
  * 
- * How it integrates with cacheComponents:
+ * Uses Next.js cache directives:
  * - 'use cache' directive enables component-level caching
  * - cacheLife('hours') provides ISR with 1-hour revalidation (CMS content changes infrequently)
  * - cacheTag('sanity-page', slug) allows targeted on-demand invalidation per page

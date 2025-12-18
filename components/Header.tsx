@@ -1,4 +1,3 @@
-// @ToPresent @rendering: Client component - uses useState for mobile menu, usePathname hook, and onClick handlers
 "use client";
 
 import { useState } from "react";

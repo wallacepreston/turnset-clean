@@ -1,5 +1,3 @@
-// @ToPresent @rendering: Server component - fetches recently viewed products from cookies and Shopify
-
 import Link from "next/link";
 import { getRecentlyViewed } from "@/lib/recently-viewed";
 import { getServiceProductByHandle } from "@/lib/shopify";

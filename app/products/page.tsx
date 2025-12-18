@@ -3,13 +3,11 @@ import { getAllServiceProducts } from "@/lib/shopify";
 import type { Product } from "@/lib/types";
 import { ProductCard } from "@/components/ProductCard";
 
-// @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "Products | TurnSet Clean",
   description: "Shop premium cleaning products, tools, and merch.",
 };
 
-// @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function ProductsPage() {
   let products: Product[] = [];
   let error: string | null = null;
@@ -58,10 +56,6 @@ export default async function ProductsPage() {
         {products.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {products.map((product) => (
-              /* @ToPresent @rendering: ProductCard is a Server Component, rendered as static HTML
-                 - HTML is pre-generated at build time or via ISR (revalidate: 1 minute)
-                 - Zero client-side JavaScript for rendering
-                 - Only Link component needs minimal hydration for client-side navigation */
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

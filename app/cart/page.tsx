@@ -1,5 +1,3 @@
-// @ToPresent @rendering: Server component with Suspense for cart page
-
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";

@@ -10,13 +10,11 @@ const geist = Geist({
   subsets: ["latin",],
 });
 
-// @ToPresent @rendering: Static metadata export for root layout SEO
 export const metadata: Metadata = {
   title: "TurnSet Clean",
   description: "Premium cleaning products for every space.",
 };
 
-// @ToPresent @rendering: Root layout is a Server Component by default (all pages are Server Components)
 export default function RootLayout({
   children,
 }: Readonly<{

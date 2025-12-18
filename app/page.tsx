@@ -23,11 +23,8 @@ const LoadingSkeleton = () => {
   )
 }
 
-// @ToPresent @rendering: Server Component - data fetching happens on server, zero client JS for data
 export default async function Home() {
-  // @ToPresent @rendering: Parallel data fetching from multiple sources (Sanity + Shopify) using Promise.all()
-  // Fetch data from both Sanity (content) and Shopify (products)
-  // This demonstrates multi-source data fetching with proper caching
+  // Fetch data from both Sanity (content) and Shopify (products) in parallel
   const [homepageContent, featuredProducts] = await Promise.all([
     getHomepageContent(),
     getAllServiceProducts().catch(() => []), // Gracefully handle Shopify errors
@@ -57,11 +54,6 @@ export default async function Home() {
       </div>
 
       {/* Recently Viewed / Featured Products Section */}
-      {/* @ToPresent @rendering: RecentlyViewed is a Client Component (needs localStorage access)
-          - Server Component (Home) renders static HTML for hero/testimonials
-          - Client Component boundary: RecentlyViewed and its children (ProductCard) get hydrated
-          - ProductCard HTML is still server-rendered, but hydrated on client for interactivity
-          - This allows dynamic behavior (recently viewed from localStorage) while keeping most content static */}
         <Suspense fallback={<LoadingSkeleton/>}>
           <RecentlyViewed featuredProducts={featured} />
         </Suspense>

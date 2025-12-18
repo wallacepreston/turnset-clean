@@ -9,14 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "FAQ | TurnSet Clean",
   description: "Frequently asked questions about our cleaning products.",
 };
 
 export default async function FAQPage() {
-  // @ToPresent @rendering: Fetch FAQ page content from Sanity CMS
   const pageContent = await getPageBySlug("faq");
 
   return (

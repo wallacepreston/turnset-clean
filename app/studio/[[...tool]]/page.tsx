@@ -10,7 +10,6 @@
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../sanity.config'
 
-// @ToPresent @rendering: Studio is naturally dynamic (interactive editing tool)
 // Note: export const dynamic is incompatible with cacheComponents, but NextStudio
 // handles its own dynamic behavior as a client-side interactive component
 

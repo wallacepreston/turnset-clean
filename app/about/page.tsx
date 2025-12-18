@@ -3,14 +3,12 @@ import { getPageBySlug } from "@/lib/sanity";
 import { PortableText } from "@portabletext/react";
 import { portableTextComponents } from "@/components/PortableTextComponents";
 
-// @ToPresent @rendering: Static metadata export for page-level SEO
 export const metadata: Metadata = {
   title: "About | TurnSet Clean",
   description: "Learn more about TurnSet Clean and our mission.",
 };
 
 export default async function AboutPage() {
-  // @ToPresent @rendering: Fetch about page content from Sanity CMS
   const pageContent = await getPageBySlug("about");
 
   return (
