@@ -39,9 +39,8 @@ export function urlForImage(source: any) {
  * - 'use cache' directive enables component-level caching
  * - cacheLife('hours') provides ISR with 1-hour revalidation (content changes infrequently)
  * - cacheTag('sanity-homepage') allows on-demand invalidation via webhooks
- * - React cache() still deduplicates calls within a single render
  */
-export const getHomepageContent = cache(async (): Promise<HomepageContent | null> => {
+export async function getHomepageContent(): Promise<HomepageContent | null> {
   'use cache';
   cacheLife('hours'); // ISR: revalidate every hour (content changes infrequently)
   cacheTag('sanity-homepage'); // Tag for on-demand invalidation
@@ -76,7 +75,7 @@ export const getHomepageContent = cache(async (): Promise<HomepageContent | null
     console.error("Error fetching homepage content from Sanity:", error);
     return null;
   }
-});
+}
 
 /**
  * Fetch page content by slug
