@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, Trash2 } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
 
 interface RemoveFromCartButtonProps {
   lineId: string;
@@ -12,25 +13,14 @@ interface RemoveFromCartButtonProps {
 
 export function RemoveFromCartButton({ lineId, cartId }: RemoveFromCartButtonProps) {
   const router = useRouter();
+  const { removeFromCart } = useCart();
   const [isRemoving, setIsRemoving] = useState(false);
 
   const handleRemove = async () => {
     try {
       setIsRemoving(true);
-      const response = await fetch("/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "remove",
-          cartId,
-          lineIds: [lineId],
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to remove item");
-      }
-
+      // Use the cart context method which updates the context state
+      await removeFromCart([lineId]);
       // Refresh the page to show updated cart
       router.refresh();
     } catch (error) {
