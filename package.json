@@ -16,12 +16,15 @@
     "seed:products": "tsx scripts/seed-products.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "2.0.88",
+    "@ai-sdk/react": "2.0.118",
     "@portabletext/react": "5.0.0",
     "@radix-ui/react-slot": "1.2.4",
     "@sanity/client": "7.13.1",
     "@sanity/image-url": "1.2.0",
     "@sanity/vision": "4",
     "@shopify/storefront-api-client": "1.0.9",
+    "ai": "5.0.116",
     "class-variance-authority": "0.7.1",
     "lucide-react": "0.555.0",
     "next": "^16.0.10",
