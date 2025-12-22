@@ -45,7 +45,7 @@ export default async function Home() {
             "Premium cleaning products and tools—trusted by homeowners, hosts, landlords, and property managers."}
         </p>
         {homepageContent?.heroCtaText && (
-          <Button size="lg" asChild>
+          <Button size="lg" asChild className="bg-gradient-to-r from-primary to-secondary">
             <a href={homepageContent.heroCtaLink || "/products"}>
               {homepageContent.heroCtaText}
             </a>
