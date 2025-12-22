@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
+import { AIChatWidgetWrapper } from "@/components/AIChatWidgetWrapper";
 
 const geist = Geist({
   subsets: ["latin",],
@@ -31,6 +32,7 @@ export default function RootLayout({
           <Suspense fallback={<div className="border-t py-8" />}>
             <Footer />
           </Suspense>
+          <AIChatWidgetWrapper />
         </Providers>
       </body>
     </html>

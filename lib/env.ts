@@ -6,6 +6,7 @@ const envSchema = z.object({
   SANITY_PROJECT_ID: z.string().min(1).optional(),
   SANITY_DATASET: z.string().min(1).optional(),
   SANITY_API_TOKEN: z.string().min(1).optional(),
+  OPENAI_API_KEY: z.string().min(1).optional(),
 });
 
 export function getEnv() {
@@ -15,6 +16,7 @@ export function getEnv() {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_DATASET: process.env.SANITY_DATASET,
     SANITY_API_TOKEN: process.env.SANITY_API_TOKEN,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   });
 
   if (!parsed.success) {
@@ -49,5 +51,17 @@ export function getSanityEnv() {
   }
 
   return { projectId, dataset, apiToken };
+}
+
+export function getOpenAIEnv() {
+  const apiKey = process.env.OPENAI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error(
+      "OPENAI_API_KEY is required for AI chat feature. Please check your .env.local file or Vercel environment variables."
+    );
+  }
+
+  return { apiKey };
 }
 
